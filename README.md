@@ -12,8 +12,8 @@ I am a passionate data scientist with expertise in Statistics, Python, R Program
   - Skills used: Data Analysis, Data Visualization, Pandas, Matplotlib, Seaborn, Python, Jupyter Notebooks, Geospatial Analysis, Time Series Analysis, Statistical Analysis, Data Cleaning, NumPy,
   
 
-  ### Project 2:** [Death Rate Prediction](https://github.com/AdityaDabrase/Data-Science-Projects/blob/main/DS-ML/Cancer_DeathRatePrediction.ipynb)
--  Description : Models used: |Linear Regression| Decision Tree | Random Forest | Gradient Boosting | SVM | KNN .
+### Project 2: [Death Rate Prediction](https://github.com/AdityaDabrase/Data-Science-Projects/blob/main/DS-ML/Cancer_DeathRatePrediction.ipynb)
+-  Description: Models used: Linear Regression Decision Tree Random Forest Gradient Boosting SVM KNN.
   - GitHub: [Repository Link](https://github.com/AdityaDabrase/Data-Science-Projects/tree/main/DS-ML)
   - Technologies:  Data Visualization, Pandas, Matplotlib, Seaborn, Python, Jupyter Notebooks, Machine Learning, Scikit-Learn, Predictive Modeling, Feature Engineering, Statistical Analysis, Data Cleaning, NumPy, Data Preprocessing, Hyperparameter Tuning, Classification Algorithms, Precision and Recall.
 
