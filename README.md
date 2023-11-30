@@ -1,9 +1,6 @@
-# ADITYA DABRASE - Data Science Projects Portfolio 
+#Data Science Projects Portfolio 
 
 A repository for data science projects and to keep documentation of useful codes
-
-### About Me
-I am a passionate data scientist with expertise in Statistics, Python, R Programming and machine learning.
 
 ## Portfolio Projects
 ### Project 1: [911 calls analysis using Python ](https://github.com/AdityaDabrase/Data-Science-Projects/blob/main/DS-ML/911%20calls%20analysis/911calls.ipynb)
