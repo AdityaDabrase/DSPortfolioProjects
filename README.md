@@ -14,15 +14,3 @@ A repository for data science projects and to keep documentation of useful codes
   - GitHub: [Repository Link](https://github.com/AdityaDabrase/Data-Science-Projects/tree/main/DS-ML)
   - Technologies:  Data Visualization, Pandas, Matplotlib, Seaborn, Python, Jupyter Notebooks, Machine Learning, Scikit-Learn, Predictive Modeling, Feature Engineering, Statistical Analysis, Data Cleaning, NumPy, Data Preprocessing, Hyperparameter Tuning, Classification Algorithms, Precision and Recall.
 
-## Top Skills and Technologies
-- Python
-- R
-- Statistics
-- Machine Learning
-- Tableau
-- SQL
-
-## Contact Information
-- Email: dabrase.a@gmail.com
-- LinkedIn [My Profile] (https://www.linkedin.com/in/adityadabrase/)
- 
