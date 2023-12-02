@@ -1,6 +1,8 @@
 
 # Boston House Price Prediction Project
 
+![](https://github.com/AdityaDabrase/Data-Science-Projects/blob/main/DS.png) 
+
 The Boston Housing dataset contains data collected by the US Census Service concerning housing around Boston Massachusetts. It was obtained from the StatLib archive (http://lib.stat.cmu.edu/datasets/boston). The dataset has 167 cases. The data was originally published by Harrison Jr, David, and Daniel L. Rubinfeld. "Hedonic housing prices and the demand for clean air." Journal of environmental economics and management 5.1 (1978): 81-102. The BostonHousing.xlsx dataset has 11 attributes. The dataset comes with different imperfections (missing and outliers). As described earlier, most algorithms will not process records with these imperfections.
 
 ## Data Handling and Analysis
