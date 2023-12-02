@@ -27,6 +27,7 @@ This project involves exploring and analyzing emergency 911 call data, which inc
 Examples:
 ![](https://github.com/AdityaDabrase/Data-Science-Projects/blob/main/DS-ML/911%20calls%20analysis/Images/Screenshot%202023-12-02%20093756.png)
 
+![](https://github.com/AdityaDabrase/Data-Science-Projects/blob/main/DS-ML/911%20calls%20analysis/Images/Screenshot%202023-12-02%20093748.png)
 
 ## Insights and Findings
 
