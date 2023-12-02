@@ -1,6 +1,6 @@
 # Analyzing 911 Call Data
 
-![Analyzing 911 Call Data](["DS-ML/911 calls analysis/Images/dispatch-emergency.gif"](https://github.com/AdityaDabrase/Data-Science-Projects/blob/main/DS-ML/911%20calls%20analysis/Images/dispatch-emergency.gif))
+![Analyzing 911 Call Data](https://github.com/AdityaDabrase/Data-Science-Projects/blob/main/DS-ML/911%20calls%20analysis/Images/dispatch-emergency.gif))
 
 
 This project involves exploring and analyzing emergency 911 call data, which includes various fields such as latitude, longitude, description, zip code, township, and more. The data covers a wide range of emergency situations and their locations, aiming to extract insights and patterns from the dataset.
@@ -23,6 +23,10 @@ This project involves exploring and analyzing emergency 911 call data, which inc
 
 ### Visualization
 - Created various visualizations like count plots, heatmaps, and cluster maps to depict call frequencies and patterns across different time periods and reasons.
+
+Examples:
+![](https://github.com/AdityaDabrase/Data-Science-Projects/blob/main/DS-ML/911%20calls%20analysis/Images/Screenshot%202023-12-02%20093756.png)
+
 
 ## Insights and Findings
 
