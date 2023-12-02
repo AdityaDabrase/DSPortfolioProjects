@@ -1,5 +1,4 @@
 # Analyzing 911 Call Data
-<img src="DS-ML/911 calls analysis/dispatch-emergency.gif" /> 
 
 ![Analyzing 911 Call Data](https://github.com/AdityaDabrase/Data-Science-Projects/blob/main/DS-ML/911%20calls%20analysis/dispatch-emergency.gif)
 
