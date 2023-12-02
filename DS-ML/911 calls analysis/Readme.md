@@ -1,5 +1,6 @@
 # Analyzing 911 Call Data
-![alt text](DS-ML/911 calls analysis/dispatch-emergency.gif)
+<img src="GIFS/Hello.gif" /> 
+
 
 
 This project involves exploring and analyzing emergency 911 call data, which includes various fields such as latitude, longitude, description, zip code, township, and more. The data covers a wide range of emergency situations and their locations, aiming to extract insights and patterns from the dataset.
