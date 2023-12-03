@@ -4,7 +4,7 @@
 ## Overview
 The project focuses on predicting flight delays for commercial flights departing from the Washington, D.C., area and arriving in New York in January 2004. The dataset includes information on departure/arrival airports, distances, scheduled times, and the main target variable—whether a flight is delayed (defined as an arrival at least 15 minutes later than scheduled).
 
-## [Phase A: Data Preprocessing ](https://github.com/AdityaDabrase/FlightDelay/blob/main/Flight%20Delay%20EDA.pdf "EDA")
+## [Phase A: Data Preprocessing ](https://github.com/AdityaDabrase/DSPortfolioProjects/blob/main/DS-ML/FlightDelayPredictor/Flight%20Delay%20EDA.pdf "EDA")
 
 1. **Data Reduction**:
    - Aim: Reduce predictors using domain knowledge or correlation matrices.
@@ -18,7 +18,7 @@ The project focuses on predicting flight delays for commercial flights departing
    - Conversion: Transform non-numerical data into a suitable format.
    - Reference: Create a table documenting the transformed data.
 
-## [Phase B: Model Building](https://github.com/AdityaDabrase/FlightDelay/blob/main/Flight%20Delay%20Predictions.pdf"Model")
+## [Phase B: Model Building](https://github.com/AdityaDabrase/DSPortfolioProjects/blob/main/DS-ML/FlightDelayPredictor/Flight%20Delay%20EDA.pdf"Model")
 - **Algorithms and Output Types**:
   - Naïve Bayes (NB): Categorical output
   - Classification and Regression Tree (CART): Both categorical and numerical output
