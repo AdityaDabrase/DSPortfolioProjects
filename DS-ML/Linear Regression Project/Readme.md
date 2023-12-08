@@ -1,7 +1,7 @@
 # Linear Regression Project
 
 
-![Analyzing 911 Call Data](https://github.com/AdityaDabrase/DSPortfolioProjects/blob/main/DS-ML/LR/Visualization-of-logistic-regression-model-of-an-exemplary-subject-Both-variables.png)
+![pairplot linear regression project](https://github.com/AdityaDabrase/DSPortfolioProjects/blob/main/DS-ML/Linear%20Regression%20Project/Screenshot%202023-12-08%20135931.png)
 
 ## Overview
 
