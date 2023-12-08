@@ -1,6 +1,6 @@
 # Logistic Regression Project
 
-![Analyzing 911 Call Data](https://github.com/AdityaDabrase/DSPortfolioProjects/blob/main/DS-ML/LR/Visualization-of-logistic-regression-model-of-an-exemplary-subject-Both-variables.png)
+![Analyzing 911 Call Data](https://github.com/AdityaDabrase/DSPortfolioProjects/tree/main/DS-ML/LR)
 
 In this project, we aimed to create a predictive model using logistic regression to determine whether an internet user would click on an advertisement based on various user features.
 
