@@ -8,7 +8,7 @@ A repository for data science projects and to keep documentation of useful codes
 - Skills used:  the skills required include proficient data cleaning and preprocessing abilities to handle emergency call data effectively. Exploratory Data Analysis (EDA) skills are crucial to understand patterns and trends in the data. Additionally, strong data visualization skills using libraries like Matplotlib and Seaborn are essential to present insights visually. If the analysis involves temporal data, skills in time series analysis become relevant. For projects dealing with geographic data, proficiency in geographic data analysis is necessary to make sense of location-based information.
   
 
-## Project 2: [Customer Segmentation using K-Means Algorithm](https://github.com/AdityaDabrase/DSPortfolioProjects/tree/main/DS-ML/Death%20rate%20prediction)
+## Project 2: [Customer Segmentation using K-Means Algorithm](https://github.com/AdityaDabrase/DSPortfolioProjects/tree/main/K%20means%20Algorithm)
 -  Description: Models used: Linear Regression Decision Tree Random Forest Gradient Boosting SVM KNN.
 - Skills used:  The project involves a machine learning approach to predict death rates. Skills required include regression analysis, feature engineering to enhance predictive features, and the ability to evaluate and select the most suitable model. Statistical analysis skills are beneficial for understanding the underlying patterns in the data. Furthermore, expertise in data cleaning and preprocessing is essential to prepare the data for model training.
 
