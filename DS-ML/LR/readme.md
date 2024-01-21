@@ -29,7 +29,8 @@ The dataset contains the following features:
 - Seaborn
 - Scikit-learn
 
-## Exploratory Data Analysis
+## [Exploratory Data Analysis](https://github.com/AdityaDabrase/DSPortfolioProjects/blob/main/DS-ML/LR/Logistic%20Regression%20Project.ipynb)
+
 
 We conducted exploratory data analysis using Seaborn to understand the dataset better. Some of the visualizations include:
 
@@ -39,7 +40,7 @@ We conducted exploratory data analysis using Seaborn to understand the dataset b
 - Jointplot of Daily Time Spent on Site vs. Daily Internet Usage
 - Pairplot showing relationships with the 'Clicked on Ad' feature as hue
 
-## Logistic Regression
+## [Logistic Regression](https://github.com/AdityaDabrase/DSPortfolioProjects/blob/main/DS-ML/LR/Logistic%20Regression%20Project.ipynb)
 
 We used logistic regression to build a predictive model. Here are the steps:
 
@@ -47,7 +48,7 @@ We used logistic regression to build a predictive model. Here are the steps:
 2. **Model Training:** Logistic regression model fitted on the training set
 3. **Model Evaluation:** Classification report generated for model evaluation
 
-## Results
+## [Results](https://github.com/AdityaDabrase/DSPortfolioProjects/blob/main/DS-ML/LR/Logistic%20Regression%20Project.ipynb)
 
 The logistic regression model achieved the following results on the test set:
 
