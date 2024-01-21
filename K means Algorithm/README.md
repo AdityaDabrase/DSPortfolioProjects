@@ -1,4 +1,5 @@
 # Customer Segmentation Project
+![](https://github.com/AdityaDabrase/DSPortfolioProjects/blob/main/K%20means%20Algorithm/kmeans%20image.jpg))
 
 ## Overview
 
