@@ -1,4 +1,6 @@
 # Health Insurance Price Prediction and Regression Analysis
+(https://github.com/AdityaDabrase/DSPortfolioProjects/blob/main/DS-ML/Insurance/%20Insurance.ipynb)
+
 
 Many factors influence health insurance premiums, and understanding these variables is crucial for predicting costs accurately. This project explores the relationships between age, gender, BMI, number of children, smoking habits, and region with health insurance charges.
 ## Overview
