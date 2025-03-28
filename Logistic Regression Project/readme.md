@@ -31,8 +31,7 @@ The dataset contains the following features:
 
 ## [Exploratory Data Analysis](https://github.com/AdityaDabrase/DSPortfolioProjects/blob/main/DS-ML/LR/Logistic%20Regression%20Project.ipynb)
 
-
-We conducted exploratory data analysis using Seaborn to understand the dataset better. Some of the visualizations include:
+Conducted exploratory data analysis using Seaborn to understand the dataset better. Some of the visualizations include:
 
 - Histogram of Age distribution
 - Jointplot of Area Income vs. Age
@@ -42,7 +41,7 @@ We conducted exploratory data analysis using Seaborn to understand the dataset b
 
 ## [Logistic Regression](https://github.com/AdityaDabrase/DSPortfolioProjects/blob/main/DS-ML/LR/Logistic%20Regression%20Project.ipynb)
 
-We used logistic regression to build a predictive model. Here are the steps:
+Used logistic regression to build a predictive model. Here are the steps:
 
 1. **Data Splitting:** Train-test split with a 33% test size
 2. **Model Training:** Logistic regression model fitted on the training set
