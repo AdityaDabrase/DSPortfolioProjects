@@ -1,0 +1,6 @@
+Model,R2 (CV mean),R2 (CV std),MAE,RMSE
+Random Forest,0.855,0.032,2536.0,4547.0
+Polynomial Regression (deg=2),0.835,0.039,2913.0,4834.0
+Linear Regression,0.74,0.058,4203.0,6077.0
+Ridge Regression,0.74,0.058,4204.0,6077.0
+Lasso Regression,0.74,0.057,4204.0,6078.0
