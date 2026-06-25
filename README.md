@@ -1,29 +1,51 @@
-![](https://github.com/AdityaDabrase/Data-Science-Projects/blob/main/DS.png) 
+# Data Science Portfolio — Aditya Dabrase
 
-A repository for data science projects and to keep documentation of useful codes
+![banner](assets/banner.png)
 
-# Portfolio Projects
-## Project 1: [911 calls analysis using Python ](https://github.com/AdityaDabrase/DSPortfolioProjects/tree/main/DS-ML/911%20calls%20analysis)
-- Description: Analyzing some 911 call data from Kaggle. (Exploratory data analysis and Data visualization)
-- Skills used:  the skills required include proficient data cleaning and preprocessing abilities to handle emergency call data effectively. Exploratory Data Analysis (EDA) skills are crucial to understand patterns and trends in the data. Additionally, strong data visualization skills using libraries like Matplotlib and Seaborn are essential to present insights visually. If the analysis involves temporal data, skills in time series analysis become relevant. For projects dealing with geographic data, proficiency in geographic data analysis is necessary to make sense of location-based information.
-  
+A collection of data science projects spanning exploratory analysis, regression, classification, clustering, and dimensionality reduction. Each project lives in its own folder with a consistent layout: `data/`, `notebook.ipynb`, optional `analysis.py`, and `assets/`.
 
-## Project 2: [Customer Segmentation using K-Means Algorithm](https://github.com/AdityaDabrase/DSPortfolioProjects/tree/main/K%20means%20Algorithm)
--  Description: Models used: Linear Regression Decision Tree Random Forest Gradient Boosting SVM KNN.
-- Skills used:  The project involves a machine learning approach to predict death rates. Skills required include regression analysis, feature engineering to enhance predictive features, and the ability to evaluate and select the most suitable model. Statistical analysis skills are beneficial for understanding the underlying patterns in the data. Furthermore, expertise in data cleaning and preprocessing is essential to prepare the data for model training.
+## Skills demonstrated
 
-## Project 3: [Flight Delay Predictor](https://github.com/AdityaDabrase/DSPortfolioProjects/tree/main/DS-ML/FlightDelayPredictor)
--  Description: Models used: Linear Regression Decision Tree Random Forest Gradient Boosting SVM KNN.
-- Skills used: machine learning skills are essential, particularly in classification tasks if predicting delays versus no delays. Time series analysis might be necessary if considering time-dependent factors in predicting flight delays. Feature engineering skills are crucial to extract relevant information from the dataset. Model evaluation and selection skills are needed to choose the best predictive model. Data cleaning and preprocessing skills are important to handle missing or noisy data effectively.
+Python · Pandas · NumPy · Matplotlib · Seaborn · scikit-learn · Jupyter · EDA · Regression · Classification · Clustering · PCA · Cross-validation · Pipelines · GridSearchCV
 
-## Project 4: [Logistic Regression Project](https://github.com/AdityaDabrase/DSPortfolioProjects/blob/main/DS-ML/LR/Visualization-of-logistic-regression-model-of-an-exemplary-subject-Both-variables.png)
--  Description: Models used: Linear Regression Decision Tree Random Forest Gradient Boosting SVM KNN.
-- Skills used: machine learning skills are employed, specifically logistic regression for binary classification tasks. Model evaluation and selection skills are crucial for assessing the performance of the logistic regression model. Feature engineering is important to identify and use relevant features for classification. Data cleaning and preprocessing skills are necessary for preparing the data for training the logistic regression model.
+## Projects by category
 
-## Project 5: [Linear Regression Project](https://github.com/AdityaDabrase/DSPortfolioProjects/tree/main/DS-ML/Linear%20Regression%20Project)
--  Description: Models used: Linear Regression Decision Tree Random Forest Gradient Boosting SVM KNN.
-- Skills used: skills involve linear regression for regression analysis. Model evaluation and selection skills are crucial for assessing the performance of the linear regression model. Feature engineering is important for identifying and utilizing relevant features in the regression analysis. Data cleaning and preprocessing skills are necessary for preparing the data for training the linear regression model.
+### Exploratory Data Analysis
 
-## Project 6:  [Death Rate Prediction](https://github.com/AdityaDabrase/DSPortfolioProjects/tree/main/DS-ML/Death%20rate%20prediction)
--  Description: Models used: Linear Regression Decision Tree Random Forest Gradient Boosting SVM KNN.
-- Skills used:  The project involves a machine learning approach to predict death rates. Skills required include regression analysis, feature engineering to enhance predictive features, and the ability to evaluate and select the most suitable model. Statistical analysis skills are beneficial for understanding the underlying patterns in the data. Furthermore, expertise in data cleaning and preprocessing is essential to prepare the data for model training.
+| Project | Skills | Status | Link |
+|---------|--------|--------|------|
+| 911 Emergency Calls EDA | time-series patterns, geographic viz, count plots | Needs data | [911_calls_analysis](911_calls_analysis/) |
+| E-Commerce Purchases Analysis | Pandas filtering, groupby, Q&A style EDA | Needs data | [ecom_purchases](ecom_purchases/) |
+| San Francisco Salaries EDA | salary statistics, job-title analysis | Needs data | [salary_analysis](salary_analysis/) |
+| Titanic Data Visualization | Seaborn categorical plots, FacetGrid | Runnable | [titanic_visualization](titanic_visualization/) |
+
+### Machine Learning
+
+| Project | Models / methods | Status | Link |
+|---------|------------------|--------|------|
+| Health Insurance Charge Prediction | Linear, Ridge, Lasso, Random Forest, Polynomial | Runnable | [insurance_prediction](insurance_prediction/) |
+| E-Commerce Customer Spend (Linear Regression) | OLS, train/test split, residual analysis | Needs data | [linear_regression](linear_regression/) |
+| Ad Click Prediction (Logistic Regression) | binary classification, confusion matrix | Needs data | [logistic_regression](logistic_regression/) |
+| Customer Segmentation (K-Means) | elbow method, StandardScaler, PCA viz | Needs data | [k_means_clustering](k_means_clustering/) |
+| Heart Disease Prediction (PCA) | PCA, multiple classifiers | Needs data | [heart_disease_pca](heart_disease_pca/) |
+
+### Reports & work in progress
+
+| Project | Focus | Status | Link |
+|---------|-------|--------|------|
+| Flight Delay Classification | Naïve Bayes, CART, Logistic Regression | Report only | [flight_delay_predictor](flight_delay_predictor/) |
+| Boston Housing Price Analysis | missing data, outlier detection, imputation | Report only | [house_price_predictor](house_price_predictor/) |
+
+## Quickstart
+
+```bash
+git clone https://github.com/AdityaDabrase/DSPortfolioProjects.git
+cd DSPortfolioProjects
+pip install -r requirements.txt
+```
+
+**Runnable:** [insurance_prediction](insurance_prediction/) and [titanic_visualization](titanic_visualization/). Other projects include dataset download instructions in their `data/README.md` files.
+
+## Flagship project
+
+[insurance_prediction](insurance_prediction/) is the most complete project — bundled dataset, reproducible script, model comparison with cross-validation, and saved results. Use it as the template for the rest of the portfolio.
