@@ -170,7 +170,7 @@ print('RMSE:', np.sqrt(metrics.mean_squared_error(y_test, predictions)))
 # 
 # You should have gotten a very good model with a good fit. Let's quickly explore the residuals to make sure everything was okay with our data. 
 # 
-# **Plot a histogram of the residuals and make sure it looks normally distributed. Use either seaborn distplot, or just plt.hist().**
+# **Plot a histogram of the residuals and make sure it looks normally distributed. Use sns.histplot() or plt.hist().**
 
 # %%
 sns.histplot((y_test - predictions), bins=50, kde=True);

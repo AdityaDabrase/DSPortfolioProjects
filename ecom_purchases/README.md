@@ -1,7 +1,5 @@
 # E-Commerce Purchases Analysis
 
-**Status:** Needs data
-
 Pandas Q&A exercise on a synthetic e-commerce purchases dataset — exploring prices, job titles, purchase timing, and payment details.
 
 ## Skills
@@ -10,13 +8,12 @@ Python · Pandas · filtering · groupby · value counts · Q&A style EDA
 
 ## Dataset
 
-**Ecommerce Purchases** CSV — place in [`data/Ecommerce Purchases.csv`](data/) (see [data/README.md](data/README.md)).
+**Ecommerce Purchases** CSV — bundled in [`data/`](data/) (see [data/README.md](data/README.md)).
 
 ## Quickstart
 
 ```bash
 pip install -r ../requirements.txt
-# Place dataset in data/, then:
 jupyter notebook notebook.ipynb
 # or
 python analysis.py
@@ -35,4 +32,4 @@ python analysis.py
 | ---- | ------- |
 | [`notebook.ipynb`](notebook.ipynb) | Step-by-step Pandas exercises |
 | [`analysis.py`](analysis.py) | Same analysis as a script |
-| [`data/`](data/) | Place dataset here |
+| [`data/Ecommerce Purchases.csv`](data/Ecommerce%20Purchases.csv) | Dataset |

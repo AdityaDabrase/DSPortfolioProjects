@@ -8,6 +8,8 @@
 
 # %%
 import seaborn as sns
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 # %%
@@ -35,7 +37,7 @@ sns.swarmplot(x='class',y='age',data=titanic,palette='Set2')
 sns.countplot(x='sex',data=titanic)
 
 # %%
-sns.heatmap(titanic.corr(),cmap='coolwarm')
+sns.heatmap(titanic.select_dtypes(include="number").corr(), cmap="coolwarm")
 plt.title('titanic.corr()')
 
 # %%

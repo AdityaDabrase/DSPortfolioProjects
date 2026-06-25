@@ -1,3 +1,7 @@
 # Dataset
 
-**BostonHousing.xls** is included in this folder. See `assets/boston_housing_project.pdf` for the full analysis report. Notebook and script code will be added in a future update.
+**File:** `BostonHousing.xls` (included)
+
+Boston housing data used in the report [`assets/boston_housing_project.pdf`](../assets/boston_housing_project.pdf).
+
+167 cases, 11 attributes from the [StatLib archive](http://lib.stat.cmu.edu/datasets/boston).

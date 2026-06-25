@@ -1,5 +1,5 @@
 # Automations
 
-Placeholder for future data-science automation scripts (scheduled reports, data pipelines, etc.).
+Scripts for data-science automation (scheduled reports, data pipelines, etc.).
 
-Code will be added here as projects mature.
+Add projects here as they are built.

@@ -1,7 +1,5 @@
 # Health Insurance Charge Prediction
 
-**Status:** Runnable
-
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.4%2B-orange)
 

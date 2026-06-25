@@ -1,7 +1,5 @@
 # Customer Segmentation (K-Means)
 
-**Status:** Needs data
-
 Unsupervised customer segmentation using K-Means clustering on mall customer spending and income attributes, with elbow-method tuning and PCA visualization.
 
 ## Skills
@@ -10,7 +8,7 @@ Python · scikit-learn · K-Means · StandardScaler · elbow method · PCA · un
 
 ## Dataset
 
-[Mall Customer Segmentation](https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python) — place `Mall_Customers.csv` in [`data/`](data/) (see [data/README.md](data/README.md)).
+[Mall Customer Segmentation](https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python) — bundled as [`data/Mall_Customers.csv`](data/Mall_Customers.csv) (see [data/README.md](data/README.md)).
 
 Features include annual income, spending score, age, and gender.
 
@@ -18,7 +16,6 @@ Features include annual income, spending score, age, and gender.
 
 ```bash
 pip install -r ../requirements.txt
-# Place Mall_Customers.csv in data/, then:
 jupyter notebook notebook.ipynb
 # or
 python analysis.py
@@ -39,5 +36,5 @@ python analysis.py
 | ---- | ------- |
 | [`notebook.ipynb`](notebook.ipynb) | Clustering walkthrough with visualizations |
 | [`analysis.py`](analysis.py) | Same analysis as a script |
-| [`data/`](data/) | Place `Mall_Customers.csv` here |
+| [`data/Mall_Customers.csv`](data/Mall_Customers.csv) | Dataset |
 | [`assets/`](assets/) | Preview images |

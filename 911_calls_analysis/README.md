@@ -1,7 +1,5 @@
 # 911 Emergency Calls EDA
 
-**Status:** Needs data
-
 Exploring Montgomery County 911 emergency call data to uncover temporal patterns, geographic hotspots, and call-type breakdowns (EMS, Traffic, Fire).
 
 ## Skills

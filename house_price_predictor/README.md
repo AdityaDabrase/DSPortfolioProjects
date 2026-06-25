@@ -1,8 +1,6 @@
 # Boston Housing Price Analysis
 
-**Status:** Report only
-
-Handling missing data and outlier detection in the Boston Housing dataset — imputation, omission techniques, and PTRATIO outlier classification. Notebook and script code will be added in a future update.
+Handling missing data and outlier detection in the Boston Housing dataset — imputation, omission techniques, and PTRATIO outlier classification.
 
 ## Skills
 
@@ -29,8 +27,7 @@ Boston Housing data from the [StatLib archive](http://lib.stat.cmu.edu/datasets/
 
 ```bash
 pip install -r ../requirements.txt
-# Review assets/boston_housing_project.pdf
-# Code coming soon
+open assets/boston_housing_project.pdf
 ```
 
 ## Project structure

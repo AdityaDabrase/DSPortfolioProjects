@@ -1,8 +1,6 @@
 # Flight Delay Classification
 
-**Status:** Report only
-
-Predicting flight delays for commercial flights from the Washington, D.C. area to New York in January 2004 — documented methodology with PDF reports. Code and CSVs will be added in a future update.
+Predicting flight delays for commercial flights from the Washington, D.C. area to New York in January 2004 — documented methodology with PDF reports.
 
 ## Skills
 
@@ -10,7 +8,7 @@ Python · Naïve Bayes · CART · Logistic Regression · data reduction · pivot
 
 ## Dataset
 
-Flight delay training, exploration, and test CSVs referenced in the report are not yet in the repo. See [data/README.md](data/README.md).
+Training and test CSVs referenced in the reports are not included in the repo. See [data/README.md](data/README.md).
 
 ## Reports
 
@@ -30,7 +28,8 @@ Flight delay training, exploration, and test CSVs referenced in the report are n
 
 ```bash
 # Review the PDF reports in assets/
-# Code and data coming soon
+open assets/flight_delay_eda.pdf
+open assets/flight_delay_predictions.pdf
 ```
 
 ## Project structure
@@ -39,4 +38,4 @@ Flight delay training, exploration, and test CSVs referenced in the report are n
 | ---- | ------- |
 | [`assets/flight_delay_eda.pdf`](assets/flight_delay_eda.pdf) | EDA and preprocessing report |
 | [`assets/flight_delay_predictions.pdf`](assets/flight_delay_predictions.pdf) | Model building report |
-| [`data/`](data/) | CSVs to be added |
+| [`data/`](data/) | Dataset notes |

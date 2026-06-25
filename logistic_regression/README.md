@@ -1,7 +1,5 @@
 # Ad Click Prediction (Logistic Regression)
 
-**Status:** Needs data
-
 Binary classification to predict whether an internet user clicks an advertisement based on demographics, income, and browsing behavior.
 
 ## Skills
@@ -10,13 +8,12 @@ Python · Pandas · scikit-learn · logistic regression · classification report
 
 ## Dataset
 
-[Advertising Dataset](https://www.kaggle.com/datasets/ashydv/advertising-dataset) — place `advertising.csv` in [`data/`](data/) (see [data/README.md](data/README.md)).
+Ad-click dataset (`advertising.csv`) — bundled in [`data/`](data/) or see [data/README.md](data/README.md) to re-download.
 
 ## Quickstart
 
 ```bash
 pip install -r ../requirements.txt
-# Place advertising.csv in data/, then:
 jupyter notebook notebook.ipynb
 # or
 python analysis.py
@@ -29,13 +26,11 @@ python analysis.py
 - Logistic regression achieves strong separation on the test set.
 - Pairplots with hue on "Clicked on Ad" highlight the most predictive features.
 
-![Logistic regression visualization](assets/logistic_regression_viz.png)
-
 ## Project structure
 
 | File | Purpose |
 | ---- | ------- |
 | [`notebook.ipynb`](notebook.ipynb) | EDA + logistic regression walkthrough |
 | [`analysis.py`](analysis.py) | Same analysis as a script |
-| [`data/`](data/) | Place `advertising.csv` here |
+| [`data/advertising.csv`](data/advertising.csv) | Dataset |
 | [`assets/`](assets/) | Visualizations |

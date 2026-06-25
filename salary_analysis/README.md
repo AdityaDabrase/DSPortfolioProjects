@@ -1,7 +1,5 @@
 # San Francisco Salaries EDA
 
-**Status:** Needs data
-
 Exploring San Francisco city employee salary records — base pay, overtime, benefits, and job-title patterns from 2011–2014.
 
 ## Skills

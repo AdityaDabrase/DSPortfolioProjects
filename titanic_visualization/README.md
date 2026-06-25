@@ -1,7 +1,5 @@
 # Titanic Data Visualization
 
-**Status:** Runnable
-
 Seaborn visualization exercises on the classic Titanic passenger dataset — survival patterns, fare distributions, and categorical relationships.
 
 ## Skills

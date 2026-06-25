@@ -1,3 +1,8 @@
 # Dataset
 
-Training and test CSVs referenced in the project report are not yet in the repo. Code will be added in a future update. See `assets/flight_delay_eda.pdf` for the documented methodology.
+Training and test CSVs used in this project are not included in the repository.
+
+Methodology and results are documented in:
+
+- [`assets/flight_delay_eda.pdf`](../assets/flight_delay_eda.pdf)
+- [`assets/flight_delay_predictions.pdf`](../assets/flight_delay_predictions.pdf)

@@ -1,7 +1,5 @@
 # E-Commerce Customer Spend (Linear Regression)
 
-**Status:** Needs data
-
 Predicting yearly customer spend from session length, app/website time, and membership duration using linear regression.
 
 ## Skills
@@ -10,7 +8,7 @@ Python · Pandas · scikit-learn · linear regression · train/test split · res
 
 ## Dataset
 
-**Ecommerce Customers** CSV — place in [`data/Ecommerce Customers.csv`](data/) (see [data/README.md](data/README.md)).
+**Ecommerce Customers** CSV — bundled in [`data/`](data/) (see [data/README.md](data/README.md)).
 
 | Column | Description |
 | ------ | ----------- |
@@ -24,7 +22,6 @@ Python · Pandas · scikit-learn · linear regression · train/test split · res
 
 ```bash
 pip install -r ../requirements.txt
-# Place dataset in data/, then:
 jupyter notebook notebook.ipynb
 # or
 python analysis.py
@@ -45,5 +42,5 @@ python analysis.py
 | ---- | ------- |
 | [`notebook.ipynb`](notebook.ipynb) | EDA + linear regression walkthrough |
 | [`analysis.py`](analysis.py) | Same analysis as a script |
-| [`data/`](data/) | Place dataset here |
+| [`data/Ecommerce Customers.csv`](data/Ecommerce%20Customers.csv) | Dataset |
 | [`assets/`](assets/) | Visualizations |
