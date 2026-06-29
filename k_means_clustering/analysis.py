@@ -42,7 +42,7 @@ customer_data.drop('Gender', axis=1, inplace=True)
 customer_data
 
 # %%
-features = ['Age', 'Annual Income (k$)'] 
+features = ['Annual Income (k$)', 'Spending Score (1-100)']
 X = customer_data[features]
 
 # %%
@@ -102,7 +102,8 @@ custom_palette = sns.color_palette("Set2", as_cmap=True)
 
 # Create a scatter plot with cluster centers
 plt.scatter(X_pca[:, 0], X_pca[:, 1], c=customer_data['Cluster'], cmap=custom_palette, edgecolor='k', s=50)
-plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], c='red', marker='X', s=200, label='Cluster Centers')
+centers_pca = pca.transform(kmeans.cluster_centers_)
+plt.scatter(centers_pca[:, 0], centers_pca[:, 1], c='red', marker='X', s=200, label='Cluster Centers')
 
 # Annotate points with customer IDs or any relevant information
 for i, customer_id in enumerate(customer_data['CustomerID']):

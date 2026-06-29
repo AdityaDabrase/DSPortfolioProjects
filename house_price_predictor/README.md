@@ -1,39 +1,39 @@
 # Boston Housing Price Analysis
 
-Handling missing data and outlier detection in the Boston Housing dataset — imputation, omission techniques, and PTRATIO outlier classification.
+How do missing values and outliers affect housing data quality before modeling?
+
+Missing-data handling and outlier detection on a modified Boston Housing dataset. The full narrative is in the PDF report; `analysis.py` reproduces the data-quality visuals.
+
+> The classic Boston Housing dataset was retired from scikit-learn over ethical concerns (socioeconomic proxies). This project uses a modified teaching dataset for imputation and outlier exercises.
 
 ## Skills
 
-Python · Pandas · missing-data handling · outlier detection · imputation · omission · data quality
+Python · Pandas · missing-data handling · outlier detection · imputation
 
 ## Dataset
 
-Boston Housing data from the [StatLib archive](http://lib.stat.cmu.edu/datasets/boston) — bundled as [`data/BostonHousing.xls`](data/BostonHousing.xls) (167 cases, 11 attributes).
-
-## Reports
-
-- [Boston Housing Project PDF](assets/boston_housing_project.pdf) — full analysis write-up
+Bundled as [`data/BostonHousing.xls`](data/BostonHousing.xls) — see [`data/README.md`](data/README.md).
 
 ## Key findings
 
-- Missing values appear across predictors (excluding PTRATIO in the assignment scope).
-- PTRATIO contains outliers classifiable as typing errors, data-entry errors, or genuine extremes.
-- NaN substitution enables consistent missing-data workflows in Pandas.
-- Omission vs. imputation (mean, median, ML-based) trade bias for completeness.
+- Missing values appear in predictors such as `INDUS`, `NOX`, and `DIS`.
+- PTRATIO shows outliers suitable for typing-error vs. genuine-extreme classification.
+- Imputation vs. row deletion trades completeness for potential bias.
 
-![Overview](assets/overview.jpg)
+## Run
 
-## Quickstart
+From this folder:
 
 ```bash
 pip install -r ../requirements.txt
+python analysis.py
 open assets/boston_housing_project.pdf
 ```
 
-## Project structure
+## Files
 
 | File | Purpose |
 | ---- | ------- |
 | [`data/BostonHousing.xls`](data/BostonHousing.xls) | Dataset |
-| [`assets/boston_housing_project.pdf`](assets/boston_housing_project.pdf) | Analysis report |
-| [`assets/overview.jpg`](assets/overview.jpg) | Preview image |
+| [`analysis.py`](analysis.py) | Missing-value and outlier figures |
+| [`assets/boston_housing_project.pdf`](assets/boston_housing_project.pdf) | Full write-up |

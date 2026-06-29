@@ -76,20 +76,17 @@ df['timeStamp'] = pd.to_datetime(df['timeStamp'])
 # %%
 df['Hour'] = df['timeStamp'].apply(lambda time: time.hour)
 df['Month'] = df['timeStamp'].apply(lambda time: time.month)
-df['Day of Week'] = df['timeStamp'].apply(lambda time: time.dayofweek)
+df['Day of Week'] = df['timeStamp'].dt.dayofweek
 
-#feature extraction
-
-# %%
-dmap = {1:'Mon',2:'Tue',2:'Wed',4:'Thu',5:'Fri',6:'Sat',7:'Sun'}
-
-
+#feature extraction — pandas dayofweek: 0=Mon … 6=Sun
+dmap = {0: 'Mon', 1: 'Tue', 2: 'Wed', 3: 'Thu', 4: 'Fri', 5: 'Sat', 6: 'Sun'}
+df['Day of Week'] = df['Day of Week'].map(dmap)
 
 # %%
 df.head()
 
 # %%
-sns.countplot(x='Day of Week',data=df,hue='Reason',palette='viridis')
+sns.countplot(x='Day of Week', data=df, hue='Reason', palette='viridis', order=list(dmap.values()))
 
 # To relocate the legend
 plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)

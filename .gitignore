@@ -12,6 +12,16 @@ env/
 # Jupyter
 .ipynb_checkpoints/
 
+# Downloaded datasets (run: python scripts/download_data.py)
+# Bundled in git: insurance_prediction/data/insurance.csv, house_price_predictor/data/BostonHousing.xls
+911_calls_analysis/data/911.csv
+salary_analysis/data/Salaries.csv
+linear_regression/data/Ecommerce Customers.csv
+ecom_purchases/data/Ecommerce Purchases.csv
+logistic_regression/data/advertising.csv
+k_means_clustering/data/Mall_Customers.csv
+heart_disease_pca/data/hungarian.data
+
 # IDE
 .idea/
 .vscode/

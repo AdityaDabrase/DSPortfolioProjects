@@ -1,16 +1,24 @@
 # Ad Click Prediction (Logistic Regression)
 
-Binary classification to predict whether an internet user clicks an advertisement based on demographics, income, and browsing behavior.
+Which user traits predict ad clicks so marketing can target high-intent audiences?
 
 ## Skills
 
-Python · Pandas · scikit-learn · logistic regression · classification report · Seaborn EDA · train/test split
+Python · Pandas · scikit-learn · logistic regression · classification report · Seaborn EDA
 
 ## Dataset
 
-Ad-click dataset (`advertising.csv`) — bundled in [`data/`](data/) or see [data/README.md](data/README.md) to re-download.
+See [`data/README.md`](data/README.md) for source and download.
 
-## Quickstart
+## Key findings
+
+- Age and daily time on site differ between clickers and non-clickers.
+- Logistic regression achieves strong separation on the hold-out set.
+- Pairplots with hue on "Clicked on Ad" highlight the most predictive features.
+
+## Run
+
+From this folder:
 
 ```bash
 pip install -r ../requirements.txt
@@ -19,18 +27,10 @@ jupyter notebook notebook.ipynb
 python analysis.py
 ```
 
-## Key findings
-
-- Age and daily time on site show distinct distributions between clickers and non-clickers.
-- Area income and daily internet usage interact with ad-click behavior.
-- Logistic regression achieves strong separation on the test set.
-- Pairplots with hue on "Clicked on Ad" highlight the most predictive features.
-
-## Project structure
+## Files
 
 | File | Purpose |
 | ---- | ------- |
-| [`notebook.ipynb`](notebook.ipynb) | EDA + logistic regression walkthrough |
+| [`notebook.ipynb`](notebook.ipynb) | EDA + logistic regression |
 | [`analysis.py`](analysis.py) | Same analysis as a script |
-| [`data/advertising.csv`](data/advertising.csv) | Dataset |
-| [`assets/`](assets/) | Visualizations |
+| [`data/`](data/) | Dataset |

@@ -1,36 +1,36 @@
 # San Francisco Salaries EDA
 
-Exploring San Francisco city employee salary records — base pay, overtime, benefits, and job-title patterns from 2011–2014.
+How is public-sector compensation distributed across roles and years in San Francisco (2011–2014)?
 
 ## Skills
 
-Python · Pandas · aggregation · groupby · sorting · salary statistics
+Python · Pandas · groupby · aggregation · salary statistics
 
 ## Dataset
 
-[SF Salaries](https://www.kaggle.com/datasets/kaggle/sf-salaries) — download `Salaries.csv` into [`data/`](data/) (see [data/README.md](data/README.md)).
+See [`data/README.md`](data/README.md) for source and download.
 
-## Quickstart
+## Key findings
+
+- Base pay and overtime vary widely across departments and roles.
+- A small set of job titles account for many employees.
+- Year-over-year average base pay shifts from 2011 to 2014; negative totals flag data-quality issues.
+
+## Run
+
+From this folder:
 
 ```bash
 pip install -r ../requirements.txt
-# Place Salaries.csv in data/, then:
 jupyter notebook notebook.ipynb
 # or
 python analysis.py
 ```
 
-## Key findings
-
-- Base pay and overtime vary widely across departments and roles.
-- A small set of job titles account for the majority of employees.
-- Year-over-year average base pay shifts from 2011 to 2014.
-- "Chief" titles and single-person roles highlight organizational structure.
-
-## Project structure
+## Files
 
 | File | Purpose |
 | ---- | ------- |
-| [`notebook.ipynb`](notebook.ipynb) | Pandas Q&A exercises |
+| [`notebook.ipynb`](notebook.ipynb) | Pandas exercises |
 | [`analysis.py`](analysis.py) | Same analysis as a script |
-| [`data/`](data/) | Place `Salaries.csv` here |
+| [`data/`](data/) | Dataset |

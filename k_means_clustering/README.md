@@ -1,18 +1,26 @@
 # Customer Segmentation (K-Means)
 
-Unsupervised customer segmentation using K-Means clustering on mall customer spending and income attributes, with elbow-method tuning and PCA visualization.
+What distinct shopper personas exist by spending behavior and income — and how might marketing reach each?
 
 ## Skills
 
-Python · scikit-learn · K-Means · StandardScaler · elbow method · PCA · unsupervised learning · Matplotlib · Seaborn
+Python · scikit-learn · K-Means · StandardScaler · elbow method · PCA visualization
 
 ## Dataset
 
-[Mall Customer Segmentation](https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python) — bundled as [`data/Mall_Customers.csv`](data/Mall_Customers.csv) (see [data/README.md](data/README.md)).
+See [`data/README.md`](data/README.md) for source and download.
 
-Features include annual income, spending score, age, and gender.
+## Key findings
 
-## Quickstart
+- The elbow method suggests ~4 clusters balancing WCSS and interpretability.
+- Income vs. spending score reveals distinct personas (e.g. high income / low spend vs. high spenders).
+- PCA projection makes cluster separation visible in 2D.
+
+![K-Means preview](assets/kmeans_preview.jpg)
+
+## Run
+
+From this folder:
 
 ```bash
 pip install -r ../requirements.txt
@@ -21,20 +29,11 @@ jupyter notebook notebook.ipynb
 python analysis.py
 ```
 
-## Key findings
-
-- The elbow method suggests an optimal cluster count balancing WCSS and interpretability.
-- Distinct segments emerge by income vs. spending score (e.g. high income / low spend vs. high spenders).
-- PCA projection makes cluster separation visually clear in 2D.
-- Segments map to actionable marketing personas (budget-conscious, target buyers, etc.).
-
-![K-Means preview](assets/kmeans_preview.jpg)
-
-## Project structure
+## Files
 
 | File | Purpose |
 | ---- | ------- |
-| [`notebook.ipynb`](notebook.ipynb) | Clustering walkthrough with visualizations |
+| [`notebook.ipynb`](notebook.ipynb) | Clustering walkthrough |
 | [`analysis.py`](analysis.py) | Same analysis as a script |
-| [`data/Mall_Customers.csv`](data/Mall_Customers.csv) | Dataset |
+| [`data/`](data/) | Dataset |
 | [`assets/`](assets/) | Preview images |

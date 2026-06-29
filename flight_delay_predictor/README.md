@@ -1,41 +1,37 @@
 # Flight Delay Classification
 
-Predicting flight delays for commercial flights from the Washington, D.C. area to New York in January 2004 — documented methodology with PDF reports.
+What drives flight delays for D.C.-area flights to New York — and which models best predict them?
+
+Analysis of commercial flight delays (January 2004), documented in PDF reports. Training data is not included in this repo.
 
 ## Skills
 
-Python · Naïve Bayes · CART · Logistic Regression · data reduction · pivot-table EDA · classification
-
-## Dataset
-
-Training and test CSVs referenced in the reports are not included in the repo. See [data/README.md](data/README.md).
+Naïve Bayes · CART · Logistic Regression · feature reduction · pivot-table EDA
 
 ## Reports
 
-- [Flight Delay EDA](assets/flight_delay_eda.pdf) — Phase A: data preprocessing, exploration, and conversion
-- [Flight Delay Predictions](assets/flight_delay_predictions.pdf) — Phase B & C: model building and testing
+- [Flight Delay EDA](assets/flight_delay_eda.pdf) — preprocessing and exploration
+- [Flight Delay Predictions](assets/flight_delay_predictions.pdf) — model building and testing
+
+A delay is defined as arrival ≥ 15 minutes later than scheduled.
 
 ## Key findings
 
-- Domain-knowledge feature reduction simplifies the predictor set before modeling.
-- Naïve Bayes, CART, and Logistic Regression serve different output types (categorical vs. numerical).
+- Domain-knowledge feature reduction simplified the predictor set before modeling.
+- Naïve Bayes, CART, and logistic regression serve different output types.
 - Pivot-table summaries reveal delay patterns across airports and scheduled times.
-- A delay is defined as arrival ≥ 15 minutes later than scheduled.
 
-![Overview](assets/overview.jpg)
-
-## Quickstart
+## Run
 
 ```bash
-# Review the PDF reports in assets/
 open assets/flight_delay_eda.pdf
 open assets/flight_delay_predictions.pdf
 ```
 
-## Project structure
+## Files
 
 | File | Purpose |
 | ---- | ------- |
-| [`assets/flight_delay_eda.pdf`](assets/flight_delay_eda.pdf) | EDA and preprocessing report |
-| [`assets/flight_delay_predictions.pdf`](assets/flight_delay_predictions.pdf) | Model building report |
-| [`data/`](data/) | Dataset notes |
+| [`assets/flight_delay_eda.pdf`](assets/flight_delay_eda.pdf) | EDA report |
+| [`assets/flight_delay_predictions.pdf`](assets/flight_delay_predictions.pdf) | Modeling report |
+| [`data/README.md`](data/README.md) | Dataset notes |

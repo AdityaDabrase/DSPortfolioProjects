@@ -43,7 +43,7 @@ ecom['Purchase Price'].min()
 # ** How many people have English 'en' as their Language of choice on the website? **
 
 # %%
-ecom[ecom['Language']=='en'].count()
+len(ecom[ecom['Language'] == 'en'])
 
 # %% [markdown]
 # ** How many people have the job title of "Lawyer" ? **

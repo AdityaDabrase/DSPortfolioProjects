@@ -4,11 +4,11 @@
 
 Montgomery County, PA emergency 911 calls ([Kaggle: mchirico/montcoalert](https://www.kaggle.com/mchirico/montcoalert)).
 
-**Expected columns include:** `lat`, `lng`, `title`, `timeStamp`, `twp`, `addr`, `e`
-
-**Download:** Kaggle account required — download `911.csv` and place it in this folder.
+**Download into this folder:**
 
 ```bash
-# After downloading from Kaggle:
-# mv ~/Downloads/911.csv .
+curl -L -o 911.csv \
+  "https://raw.githubusercontent.com/Nelly2i/Data-Analysis-Projects/main/911.csv"
 ```
+
+Expected columns include: `lat`, `lng`, `title`, `timeStamp`, `twp`, `addr`, `e`

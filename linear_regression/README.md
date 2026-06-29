@@ -1,24 +1,26 @@
 # E-Commerce Customer Spend (Linear Regression)
 
-Predicting yearly customer spend from session length, app/website time, and membership duration using linear regression.
+Which customer engagement signals best predict annual spend — app, website, or membership tenure?
 
 ## Skills
 
-Python · Pandas · scikit-learn · linear regression · train/test split · residual analysis · Seaborn pairplots
+Python · Pandas · scikit-learn · linear regression · train/test split · residual analysis
 
 ## Dataset
 
-**Ecommerce Customers** CSV — bundled in [`data/`](data/) (see [data/README.md](data/README.md)).
+See [`data/README.md`](data/README.md) for source and download.
 
-| Column | Description |
-| ------ | ----------- |
-| Avg. Session Length | In-store advice session length |
-| Time on App | Mobile app minutes |
-| Time on Website | Website minutes |
-| Length of Membership | Years as a member |
-| Yearly Amount Spent | Target variable |
+## Key findings
 
-## Quickstart
+- Length of membership is the strongest linear predictor of yearly spend.
+- Time on App correlates more with spend than Time on Website.
+- Residuals are approximately normal, supporting the linear model assumption.
+
+![Pairplot](assets/pairplot.png)
+
+## Run
+
+From this folder:
 
 ```bash
 pip install -r ../requirements.txt
@@ -27,20 +29,11 @@ jupyter notebook notebook.ipynb
 python analysis.py
 ```
 
-## Key findings
-
-- Length of membership is the strongest linear predictor of yearly spend.
-- Time on App correlates more with spend than Time on Website.
-- Residuals are approximately normal, supporting the linear model assumption.
-- Pairplots reveal non-linear pockets that a simple linear model may miss.
-
-![Pairplot](assets/pairplot.png)
-
-## Project structure
+## Files
 
 | File | Purpose |
 | ---- | ------- |
-| [`notebook.ipynb`](notebook.ipynb) | EDA + linear regression walkthrough |
+| [`notebook.ipynb`](notebook.ipynb) | EDA + linear regression |
 | [`analysis.py`](analysis.py) | Same analysis as a script |
-| [`data/Ecommerce Customers.csv`](data/Ecommerce%20Customers.csv) | Dataset |
+| [`data/`](data/) | Dataset |
 | [`assets/`](assets/) | Visualizations |

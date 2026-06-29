@@ -1,33 +1,37 @@
 # Heart Disease Prediction (PCA)
 
-Dimensionality reduction and classification on the UCI Hungarian heart disease dataset — PCA for feature compression followed by multiple classifier comparison.
+Can clinical heart-disease screening be simplified by compressing many measurements into fewer dimensions while keeping predictive accuracy?
 
 ## Skills
 
-Python · Pandas · scikit-learn · PCA · classification · model comparison · data preprocessing
+Python · Pandas · scikit-learn · PCA · imputation · classification
 
 ## Dataset
 
-[UCI Heart Disease (Hungary)](https://archive.ics.uci.edu/dataset/45/heart+disease) — bundled as [`data/hungarian.data`](data/hungarian.data) (see [data/README.md](data/README.md)).
+UCI Hungarian heart disease subset — see [`data/README.md`](data/README.md) for source and download.
 
-## Quickstart
+## Key findings
+
+- Median imputation retains 294 patients despite extensive missing values in several fields.
+- Two PCA components preserve separable structure between disease and no-disease groups.
+- Random Forest and logistic regression both reach ~84–85% hold-out accuracy on PCA features.
+
+## Run
+
+From this folder:
 
 ```bash
 pip install -r ../requirements.txt
 jupyter notebook notebook.ipynb
+# or
+python analysis.py
 ```
 
-## Key findings
-
-- PCA reduces feature dimensionality while preserving most variance.
-- Multiple classifiers can be compared on the reduced feature space.
-- Feature scaling and encoding are critical before PCA on mixed clinical attributes.
-- Model performance varies by algorithm choice on the reduced components.
-
-## Project structure
+## Files
 
 | File | Purpose |
 | ---- | ------- |
-| [`notebook.ipynb`](notebook.ipynb) | PCA + classification analysis |
-| [`data/hungarian.data`](data/hungarian.data) | UCI Hungary heart disease subset |
-| [`assets/`](assets/) | Visualizations |
+| [`notebook.ipynb`](notebook.ipynb) | EDA, PCA, and classification |
+| [`analysis.py`](analysis.py) | Reproducible end-to-end script |
+| [`data/`](data/) | Dataset |
+| [`assets/`](assets/) | Figures |

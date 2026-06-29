@@ -4,8 +4,16 @@
 
 San Francisco city employee salaries ([Kaggle: kaggle/sf-salaries](https://www.kaggle.com/datasets/kaggle/sf-salaries)).
 
-**Expected columns include:** `Employee Name`, `Job Title`, `BasePay`, `OvertimePay`, `TotalPay`, etc.
+**Download into this folder** (requires `kagglehub`, included in repo `requirements.txt`):
 
-**Download:** Kaggle account required — download `Salaries.csv` and place it in this folder.
+```bash
+python -c "
+import shutil, kagglehub
+from pathlib import Path
+src = next(Path(kagglehub.dataset_download('kaggle/sf-salaries')).rglob('Salaries.csv'))
+shutil.copy2(src, 'Salaries.csv')
+print('Saved Salaries.csv')
+"
+```
 
-There is no stable public raw URL for the full dataset; Kaggle is the reliable source.
+Expected columns include: `EmployeeName`, `JobTitle`, `BasePay`, `OvertimePay`, `TotalPayBenefits`, `Year`
