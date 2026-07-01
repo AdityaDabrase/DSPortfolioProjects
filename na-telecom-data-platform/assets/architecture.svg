@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 420" font-family="system-ui, sans-serif">
+  <rect width="920" height="420" fill="#0f172a"/>
+  <text x="460" y="36" fill="#f8fafc" font-size="18" text-anchor="middle" font-weight="600">NA Telecom Market Intelligence Pipeline</text>
+
+  <!-- Sources -->
+  <rect x="30" y="70" width="150" height="50" rx="8" fill="#1e3a5f" stroke="#38bdf8"/>
+  <text x="105" y="100" fill="#e2e8f0" font-size="13" text-anchor="middle">CRTC Open Data</text>
+
+  <rect x="30" y="140" width="150" height="50" rx="8" fill="#1e3a5f" stroke="#38bdf8"/>
+  <text x="105" y="170" fill="#e2e8f0" font-size="13" text-anchor="middle">FCC Form 477</text>
+
+  <rect x="30" y="210" width="150" height="50" rx="8" fill="#1e3a5f" stroke="#38bdf8"/>
+  <text x="105" y="240" fill="#e2e8f0" font-size="13" text-anchor="middle">Synthetic Subscribers</text>
+
+  <!-- Landing -->
+  <rect x="240" y="120" width="150" height="90" rx="8" fill="#14532d" stroke="#4ade80"/>
+  <text x="315" y="155" fill="#ecfdf5" font-size="13" text-anchor="middle">GCS / Local Raw</text>
+  <text x="315" y="178" fill="#86efac" font-size="11" text-anchor="middle">data/raw/</text>
+
+  <!-- Airflow -->
+  <rect x="450" y="120" width="150" height="90" rx="8" fill="#4c1d95" stroke="#a78bfa"/>
+  <text x="525" y="155" fill="#f5f3ff" font-size="13" text-anchor="middle">Airflow DAG</text>
+  <text x="525" y="178" fill="#c4b5fd" font-size="11" text-anchor="middle">na_telecom_pipeline</text>
+
+  <!-- Warehouse -->
+  <rect x="660" y="70" width="220" height="190" rx="8" fill="#1c1917" stroke="#fbbf24"/>
+  <text x="770" y="98" fill="#fef3c7" font-size="13" text-anchor="middle" font-weight="600">BigQuery / DuckDB</text>
+  <text x="680" y="125" fill="#fde68a" font-size="11">stg_crtc_retail_mobile</text>
+  <text x="680" y="145" fill="#fde68a" font-size="11">stg_fcc_county_connections</text>
+  <text x="680" y="165" fill="#fde68a" font-size="11">fct_market_metrics</text>
+  <text x="680" y="185" fill="#fde68a" font-size="11">mart_carrier_market_share</text>
+  <text x="680" y="205" fill="#fde68a" font-size="11">mart_regional_churn</text>
+  <text x="680" y="235" fill="#86efac" font-size="11">+ data quality checks</text>
+
+  <!-- Arrows -->
+  <line x1="180" y1="95" x2="240" y2="145" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="180" y1="165" x2="240" y2="165" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="180" y1="235" x2="240" y2="185" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="390" y1="165" x2="450" y2="165" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="600" y1="165" x2="660" y2="165" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Outputs -->
+  <rect x="240" y="310" width="200" height="60" rx="8" fill="#312e81" stroke="#818cf8"/>
+  <text x="340" y="345" fill="#e0e7ff" font-size="12" text-anchor="middle">Summary Report + Docs</text>
+
+  <rect x="480" y="310" width="200" height="60" rx="8" fill="#312e81" stroke="#818cf8"/>
+  <text x="580" y="345" fill="#e0e7ff" font-size="12" text-anchor="middle">Analyst-Ready Marts</text>
+
+  <line x1="770" y1="260" x2="580" y2="310" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="770" y1="260" x2="340" y2="310" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+  </defs>
+</svg>

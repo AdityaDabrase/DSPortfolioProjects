@@ -4,6 +4,14 @@
 
 Independent data science projects, each in its own folder with its own data, notebook, and documentation. There is no shared application or pipeline — open any project below on its own.
 
+## Data Engineering
+
+| Project | Link |
+|---------|------|
+| North American Telecom Market Intelligence Pipeline | [na-telecom-data-platform](na-telecom-data-platform/) |
+
+Batch pipeline ingesting **CRTC** (Canada) and **FCC** (US) regulatory telecom data with Airflow, BigQuery/DuckDB, and data quality checks. Includes a [project guide](na-telecom-data-platform/docs/project_explained.md) on telecom analytics and engineering concepts.
+
 ## Setup (once)
 
 Shared Python dependencies for all projects:

@@ -1,0 +1,12 @@
+carrier_id,display_name,parent_group,country,is_mno,is_flanker_brand,market_weight_ca,market_weight_us
+CA_BELL,Bell,Bell Group,CA,1,0,0.30,0.0
+CA_BELL_VIRGIN,Virgin Plus,Bell Group,CA,0,1,0.0,0.0
+CA_TELUS,TELUS,TELUS Group,CA,1,0,0.27,0.0
+CA_KOODO,Koodo,TELUS Group,CA,0,1,0.0,0.0
+CA_ROGERS,Rogers,Rogers Group,CA,1,0,0.32,0.0
+CA_FIDO,Fido,Rogers Group,CA,0,1,0.0,0.0
+CA_QUEBECOR,Videotron,Quebecor Group,CA,1,0,0.11,0.0
+US_VERIZON,Verizon,Verizon Group,US,1,0,0.0,0.32
+US_ATT,AT&T,AT&T Group,US,1,0,0.0,0.28
+US_TMOBILE,T-Mobile,T-Mobile US,US,1,0,0.0,0.30
+US_COMCAST,Comcast (Xfinity),Comcast Group,US,1,0,0.0,0.10
