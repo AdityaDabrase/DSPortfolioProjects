@@ -28,6 +28,14 @@ python scripts/download_data.py
 
 ## Projects
 
+### Experimentation & Causal Inference
+
+| Project | Link |
+|---------|------|
+| A/B Testing: Email Marketing Experiment + Experiment Auditor | [ab_testing_email_marketing](ab_testing_email_marketing/) |
+
+End-to-end analysis of a real 64,000-customer randomized email test (design, validity checks, inference, dollar impact), three audience-tiered docs, and a reusable CLI tool that audits any A/B test CSV for sample-ratio mismatch, imbalance, underpowering, and peeking.
+
 ### Exploratory Data Analysis
 
 | Project | Link |

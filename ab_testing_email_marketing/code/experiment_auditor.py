@@ -1,326 +1,371 @@
+"""Experiment Auditor: automated health report for any A/B test CSV.
+
+Point it at a CSV, name the group column and the outcome column, and it
+grades the experiment the way a good data scientist would before trusting
+its result:
+
+  1. Sample Ratio Mismatch  - did the traffic split match the design?
+  2. Covariate balance      - did randomization actually mix the groups?
+  3. Statistical power      - was the test big enough to see anything?
+  4. Peeking simulation     - what early stopping would have done here
+  5. Verdict                - effect size, CI, p-value, plain-English call
+
+Usage (from the project root):
+    python code/experiment_auditor.py data/raw/hillstrom.csv \
+        --group segment --outcome conversion --control "No E-Mail"
+
+    python code/experiment_auditor.py data/raw/marketing_ab.csv \
+        --group "test group" --outcome converted --control psa \
+        --expected-share ad=0.96 --expected-share psa=0.04
+
+The tool is industry-agnostic on purpose: nothing in it knows about
+email or ads. Any randomized test with a group column and a binary
+outcome column can be audited.
 """
-Experiment Auditor: grade any A/B test CSV before trusting its p-values.
 
-The point of this tool: most A/B test write-ups jump straight to "is the
-lift significant?". But a p-value is only meaningful if the EXPERIMENT
-DESIGN was sound. This auditor runs the checks a mature experimentation
-platform (Microsoft ExP, Airbnb ERF, Booking) runs automatically, and
-issues a plain-English verdict.
-
-Checks:
-  1. Sample Ratio Mismatch  -- did the randomizer deliver the intended split?
-  2. Covariate balance      -- do the arms look like the same population?
-  3. Power                  -- was the test big enough to see the effect it
-                               claims to care about?
-  4. Peeking simulation     -- educational A/A demo of why early stopping lies
-  5. Verdict                -- effect size, CI, p-value, ship / no-ship / invalid
-
-Usage:
-    python experiment_auditor.py <csv> --group-col SEGMENT --outcome-col CONV
-        [--control-label NO_EMAIL] [--covariates col1 col2 ...]
-        [--expected-ratios 0.5 0.5] [--mde 0.002] [--peek-demo out.png]
-
-Examples (from the code/ directory):
-    # The Hillstrom email experiment: clean three-arm design
-    python experiment_auditor.py ../data/raw/hillstrom.csv \
-        --group-col segment --outcome-col conversion \
-        --control-label "No E-Mail" \
-        --covariates recency history mens womens newbie channel zip_code
-
-    # The Kaggle ad test: watch the auditor catch the 96/4 split
-    python experiment_auditor.py ../data/raw/marketing_ab.csv \
-        --group-col "test group" --outcome-col converted \
-        --control-label psa
-"""
+from __future__ import annotations
 
 import argparse
 import sys
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from scipy import stats
 
-from utils import (achieved_power, balance_check, holm_correction,
-                   minimum_detectable_effect, srm_check,
-                   two_proportion_ztest)
+# Allow running as a script from anywhere: put this file's folder on the
+# path so `import utils` works without packaging ceremony.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-# Report formatting helpers -- pure cosmetics, no statistics here.
-WIDTH = 74
-PASS, WARN, FAIL = "[PASS]", "[WARN]", "[FAIL]"
+from experiment_design import mde_two_proportions, power_achieved
+from utils import srm_check, standardized_mean_difference, two_proportion_ztest
 
-
-def header(title):
-    print("\n" + "=" * WIDTH)
-    print(title)
-    print("=" * WIDTH)
+SEPARATOR = "-" * 68
 
 
 # ---------------------------------------------------------------------------
 # Check 1: Sample Ratio Mismatch
 # ---------------------------------------------------------------------------
 
-def check_srm(df, group_col, expected_ratios):
+def check_srm(df: pd.DataFrame, group_col: str, expected_shares: dict[str, float] | None):
+    """SRM is the single highest-value automated check in experimentation.
+
+    If users were supposed to be split 50/50 (or 96/4) and the observed
+    counts are statistically incompatible with that split, something in
+    the assignment pipeline is broken and EVERY downstream number is
+    suspect. Microsoft/LinkedIn/Airbnb all run this check automatically.
     """
-    Compare observed group sizes to the intended split.
+    counts = df[group_col].value_counts().to_dict()
+    chi2, p, verdict = srm_check(counts, expected_shares)
 
-    Why this is check #1: an SRM means users were LOST or MISROUTED in a way
-    that correlates with assignment -- e.g. the treatment page crashed for
-    some browsers, or bot filtering hit one arm harder. The surviving users
-    in each arm are then no longer comparable populations, and no amount of
-    downstream statistics can repair that. Microsoft reports ~6% of its
-    experiments trip this check.
-    """
-    header("CHECK 1: SAMPLE RATIO MISMATCH (SRM)")
-    counts = df[group_col].value_counts().sort_index()
-    result = srm_check(counts.values,
-                       expected_ratios if expected_ratios else None)
-
-    ratios_txt = ("equal split assumed" if not expected_ratios
-                  else f"expected ratios {expected_ratios}")
-    print(f"Groups ({ratios_txt}):")
-    for name, obs, exp in zip(counts.index, result["observed"],
-                              result["expected"]):
-        share = obs / result["observed"].sum()
-        print(f"  {name:<20} observed {obs:>9,} ({share:6.1%})   "
-              f"expected {exp:>11,.0f}")
-
-    # p < 0.001 is the industry alarm threshold (see utils.srm_check).
-    print(f"\nChi-square = {result['chi2']:.2f}, p = {result['p_value']:.3g}")
-    if result["pass"]:
-        print(f"{PASS} Group sizes are consistent with the intended split.")
+    print(f"[1] SAMPLE RATIO MISMATCH CHECK  ->  {verdict.split(' ')[0]}")
+    for grp, n in counts.items():
+        share = n / len(df)
+        expected = expected_shares.get(grp, 1 / len(counts)) if expected_shares else 1 / len(counts)
+        print(f"    {grp:<20} n={n:>8,}  observed {share:6.2%}  vs designed {expected:6.2%}")
+    print(f"    chi-square p-value = {p:.3g}  (alarm threshold: p < 0.001)")
+    if "FAIL" in verdict:
+        print("    !! Split is incompatible with the design. Do not trust this")
+        print("    !! experiment until the assignment mechanism is explained.")
     else:
-        print(f"{FAIL} Sample Ratio Mismatch detected. The assignment")
-        print("       mechanism itself is suspect; downstream p-values")
-        print("       cannot be trusted until the cause is found.")
-    return result["pass"]
+        print("    Split is consistent with the designed allocation.")
+    print(SEPARATOR)
+    return "FAIL" not in verdict
 
 
 # ---------------------------------------------------------------------------
-# Check 2: covariate balance
+# Check 2: Covariate balance
 # ---------------------------------------------------------------------------
 
-def check_balance(df, group_col, covariates):
-    """
-    Pre-treatment variables must be indistinguishable across arms: they were
-    fixed before the coin flip, so any systematic difference means the coin
-    flip wasn't fair. This is the randomization audit.
-    """
-    header("CHECK 2: COVARIATE BALANCE (did randomization work?)")
-    if not covariates:
-        print(f"{WARN} No pre-treatment covariates supplied -- skipping.")
-        print("       (The Kaggle ad dataset ships none: 'total ads' etc.")
-        print("       are measured AFTER assignment, so they can't be used")
-        print("       to audit the randomization.)")
-        return None
+def check_balance(df: pd.DataFrame, group_col: str, outcome_col: str,
+                  post_treatment_cols: list[str] | None = None):
+    """Randomization's whole job is making groups comparable BEFORE treatment.
 
-    table = balance_check(df, group_col, covariates)
-    for _, row in table.iterrows():
-        flag = PASS if row["balanced"] else FAIL
-        print(f"  {flag} {row['covariate']:<16} {row['test']:<11} "
-              f"stat={row['statistic']:>9.3f}  p={row['p_value']:.3f}")
+    We compare every pre-treatment numeric column across groups using the
+    standardized mean difference. |SMD| < 0.1 is the standard threshold:
+    below it, differences are too small to meaningfully confound results.
+    (We use SMD, not t-tests, because at large n a t-test flags trivial
+    differences - see utils.standardized_mean_difference.)
 
-    all_ok = bool(table["balanced"].all())
-    if all_ok:
-        print(f"\n{PASS} Arms are statistically identical on all "
-              "pre-treatment traits.")
-    else:
-        print(f"\n{FAIL} At least one covariate differs across arms beyond "
-              "chance.")
+    IMPORTANT: only PRE-treatment variables belong here. Outcome-like
+    columns (visits, spend, ...) measured after treatment SHOULD differ
+    between arms if the treatment works - flagging them as 'imbalance'
+    would be a false alarm. That is why the caller must declare them via
+    `post_treatment_cols`.
+    """
+    excluded = set(post_treatment_cols or []) | {outcome_col}
+    numeric_cols = [
+        c for c in df.select_dtypes(include=np.number).columns
+        if c not in excluded and df[c].nunique() > 1
+    ]
+    groups = df[group_col].unique()
+    print("[2] COVARIATE BALANCE CHECK (pre-treatment variables)")
+
+    if not numeric_cols:
+        print("    No pre-treatment numeric covariates found - skipping.")
+        print("    (Balance can only be assessed on variables measured before treatment.)")
+        print(SEPARATOR)
+        return True
+
+    all_ok = True
+    # Compare every pair of groups on every covariate; report the worst SMD.
+    for col in numeric_cols:
+        worst = 0.0
+        for i in range(len(groups)):
+            for j in range(i + 1, len(groups)):
+                a = df.loc[df[group_col] == groups[i], col].to_numpy(dtype=float)
+                b = df.loc[df[group_col] == groups[j], col].to_numpy(dtype=float)
+                worst = max(worst, abs(standardized_mean_difference(a, b)))
+        status = "balanced" if worst < 0.1 else "IMBALANCED"
+        if worst >= 0.1:
+            all_ok = False
+        print(f"    {col:<20} worst |SMD| = {worst:.4f}  [{status}]")
+    print("    Threshold: |SMD| < 0.10 (Austin 2009, standard in causal inference).")
+    print(SEPARATOR)
     return all_ok
 
 
 # ---------------------------------------------------------------------------
-# Check 3: power
+# Check 3: Power
 # ---------------------------------------------------------------------------
 
-def check_power(df, group_col, outcome_col, control_label, mde):
+def check_power(df: pd.DataFrame, group_col: str, outcome_col: str, control_label: str):
+    """Was this experiment big enough for its own conclusion?
+
+    We compute the minimum detectable effect at the smallest arm's size.
+    If the observed effect is well below the MDE and 'not significant',
+    the test never had a chance - that's an underpowered test, not
+    evidence of no effect.
     """
-    An underpowered test can't distinguish 'no effect' from 'effect too
-    small for this sample'. We evaluate power at a HYPOTHESIZED minimum
-    effect of interest (never the observed effect -- post-hoc power computed
-    from observed data is circular and meaningless).
-    """
-    header(f"CHECK 3: POWER (at a hypothesized MDE of +{mde:.2%} absolute)")
-    ctrl = df[df[group_col] == control_label]
-    p_base = ctrl[outcome_col].mean()
+    control = df[df[group_col] == control_label]
+    baseline = control[outcome_col].mean()
     n_smallest = df[group_col].value_counts().min()
 
-    power = achieved_power(p_base, mde, n_smallest)
-    mde_80 = minimum_detectable_effect(p_base, n_smallest)
+    mde = mde_two_proportions(baseline, int(n_smallest))
+    print("[3] POWER CHECK")
+    print(f"    Baseline (control) rate      : {baseline:.3%}")
+    print(f"    Smallest arm                 : n={n_smallest:,}")
+    print(f"    Minimum detectable effect    : {mde*100:.3f}pp absolute "
+          f"({mde/baseline:.0%} relative) at 80% power")
 
-    print(f"Baseline ({control_label}) rate : {p_base:.3%}")
-    print(f"Smallest arm size          : {n_smallest:,}")
-    print(f"Power to detect +{mde:.2%}    : {power:.0%}")
-    print(f"Smallest lift visible at 80% power: +{mde_80:.3%} absolute")
-
-    ok = power >= 0.80
-    if ok:
-        print(f"{PASS} Adequately powered for the effect size of interest.")
-    elif power >= 0.60:
-        print(f"{WARN} Marginally powered ({power:.0%}). A null result here "
-              "is weak evidence of no effect.")
-    else:
-        print(f"{FAIL} Underpowered ({power:.0%}). A 'not significant' "
-              "outcome from this test is uninformative.")
+    # Compare against what was actually observed in the best arm.
+    rates = df.groupby(group_col)[outcome_col].mean()
+    biggest_lift = (rates - baseline).drop(index=control_label, errors="ignore").abs().max()
+    pw = power_achieved(baseline, float(biggest_lift), int(n_smallest))
+    print(f"    Largest observed lift        : {biggest_lift*100:.3f}pp "
+          f"-> power to detect it = {pw:.0%}")
+    ok = pw >= 0.5
+    if not ok:
+        print("    !! Underpowered for effects of the observed size: a null result")
+        print("    !! here would be uninformative, not reassuring.")
+    print(SEPARATOR)
     return ok
 
 
 # ---------------------------------------------------------------------------
-# Check 4: the peeking demonstration (educational, simulation-based)
+# Check 4: Peeking simulation
 # ---------------------------------------------------------------------------
 
-def peeking_demo(save_path=None, seed=7):
-    """
-    Simulate an A/A test: two arms drawn from the SAME distribution, so any
-    'significant' result is by construction a false positive. We then compute
-    the p-value repeatedly as data accumulates -- exactly what a stakeholder
-    does when they refresh the dashboard every day and ask to stop the test
-    the moment the p-value dips under 0.05.
+def check_peeking(df: pd.DataFrame, group_col: str, outcome_col: str,
+                  control_label: str, treatment_label: str,
+                  n_checkpoints: int = 100, seed: int = 7,
+                  save_plot: str | None = None):
+    """Replay THIS experiment's data arriving over time and record the
+    p-value at each interim look.
 
-    The punchline: under continuous monitoring, the p-value is nearly
-    guaranteed to cross 0.05 at SOME point even with zero true effect.
-    'Stop when significant' converts a 5% error rate into a ~30-50% one.
+    The point: if a team 'peeks' and stops the moment p < 0.05, they are
+    running many tests, not one, and the real false-positive rate can
+    triple or worse. We report how many interim looks dipped below 0.05 -
+    on a healthy experiment with a real effect the p-value dives and stays
+    down; on a null experiment it wanders across the line by luck.
     """
-    header("CHECK 4: PEEKING DEMO (why early stopping lies)")
     rng = np.random.default_rng(seed)
-    n_total, p_true = 40_000, 0.006  # same baseline as our email test
-    checks = np.arange(2_000, n_total + 1, 1_000)
+    sub = df[df[group_col].isin([control_label, treatment_label])]
+    # Shuffle to simulate random arrival order (the CSV has no timestamps).
+    sub = sub.sample(frac=1, random_state=rng.integers(1e9)).reset_index(drop=True)
 
-    a = rng.random(n_total) < p_true   # arm A: conversion coin-flips
-    b = rng.random(n_total) < p_true   # arm B: IDENTICAL distribution
+    is_treat = (sub[group_col] == treatment_label).to_numpy()
+    outcome = sub[outcome_col].to_numpy(dtype=float)
 
-    p_over_time, crossed = [], []
-    for n in checks:
-        res = two_proportion_ztest(a[:n].sum(), n, b[:n].sum(), n)
-        p_over_time.append(res.p_value)
-        if res.p_value < 0.05:
-            crossed.append(n)
+    checkpoints = np.linspace(len(sub) * 0.02, len(sub), n_checkpoints, dtype=int)
+    p_trajectory = []
+    for n in checkpoints:
+        t_mask = is_treat[:n]
+        s_t, n_t = outcome[:n][t_mask].sum(), t_mask.sum()
+        s_c, n_c = outcome[:n][~t_mask].sum(), (~t_mask).sum()
+        if min(n_t, n_c) < 30 or s_t + s_c == 0:  # too early to test meaningfully
+            p_trajectory.append(1.0)
+            continue
+        res = two_proportion_ztest(int(s_t), int(n_t), int(s_c), int(n_c))
+        p_trajectory.append(res.p_value)
 
-    if crossed:
-        print(f"This A/A test (NO true difference) showed p < 0.05 at "
-              f"{len(crossed)} of {len(checks)} looks,")
-        print(f"first at n={crossed[0]:,}. Anyone who stopped there would "
-              "have shipped a mirage.")
+    p_trajectory = np.array(p_trajectory)
+    dips = int((p_trajectory < 0.05).sum())
+    final_p = p_trajectory[-1]
+
+    print(f"[4] PEEKING SIMULATION ({treatment_label} vs {control_label})")
+    print(f"    Interim looks below p<0.05   : {dips}/{n_checkpoints}")
+    print(f"    Final p-value                : {final_p:.3g}")
+    if final_p < 0.05 and dips > n_checkpoints * 0.5:
+        print("    Signal is stable: significant early and stayed significant.")
+    elif final_p >= 0.05 and dips > 0:
+        print("    !! A peeking analyst could have declared a false winner at an")
+        print("    !! interim look, even though the final result is not significant.")
     else:
-        print(f"This particular seed never crossed 0.05 across {len(checks)}"
-              " looks -- rerun with more seeds and ~30-50% of A/A tests do.")
-    print("Rule: fix the sample size in advance (or use sequential methods "
-          "designed for peeking).")
+        print("    No early-stopping hazard evident in this replay.")
 
-    if save_path:
+    if save_plot:
+        # Log scale because interesting p-values span many orders of magnitude;
+        # the red line is the naive stopping rule a "peeking" team would use.
         import matplotlib
-        matplotlib.use("Agg")  # no display needed; we only save a file
+        matplotlib.use("Agg")  # no display needed when run from the CLI
         import matplotlib.pyplot as plt
 
         fig, ax = plt.subplots(figsize=(9, 4.5))
-        ax.plot(checks, p_over_time, lw=1.8)
-        ax.axhline(0.05, color="crimson", ls="--", lw=1.2,
-                   label="p = 0.05 threshold")
-        if crossed:
-            ax.scatter([crossed[0]],
-                       [p_over_time[list(checks).index(crossed[0])]],
-                       color="crimson", zorder=5,
-                       label=f"first false 'winner' (n={crossed[0]:,})")
-        ax.set_xlabel("Sample size so far (per arm)")
-        ax.set_ylabel("p-value at that moment")
-        ax.set_title("A/A test (no true effect): p-value under continuous "
-                     "peeking")
+        ax.plot(checkpoints, np.maximum(p_trajectory, 1e-16), lw=1.8, color="steelblue")
+        ax.axhline(0.05, color="crimson", ls="--", label="p = 0.05 (naive stop rule)")
+        ax.set_yscale("log")
+        ax.set_xlabel("customers observed so far")
+        ax.set_ylabel("p-value at interim look (log scale)")
+        ax.set_title(f"Peeking replay: {treatment_label} vs {control_label} "
+                     f"({dips}/{n_checkpoints} looks below 0.05)")
         ax.legend()
-        fig.tight_layout()
-        fig.savefig(save_path, dpi=150)
-        print(f"Chart saved to {save_path}")
+        plt.tight_layout()
+        plt.savefig(save_plot, dpi=150)
+        plt.close(fig)
+        print(f"    Plot saved to {save_plot}")
+    print(SEPARATOR)
+    return p_trajectory, checkpoints
 
 
 # ---------------------------------------------------------------------------
-# Check 5: verdict
+# Check 5: Verdict
 # ---------------------------------------------------------------------------
 
-def verdict(df, group_col, outcome_col, control_label, design_ok):
-    """
-    Only now do we look at the outcome -- and every treatment-vs-control
-    p-value is Holm-corrected, because testing multiple arms against one
-    control multiplies the false-positive budget.
-    """
-    header("CHECK 5: VERDICT")
-    treatments = [g for g in df[group_col].unique() if g != control_label]
-    ctrl = df[df[group_col] == control_label]
+def check_verdict(df: pd.DataFrame, group_col: str, outcome_col: str,
+                  control_label: str, design_ok: bool):
+    """The actual answer, gated by the design checks above.
 
+    Order matters: effect sizes are only meaningful if checks 1-2 passed.
+    A beautiful p-value on an SRM'd experiment is a beautifully precise
+    measurement of a broken pipeline.
+    """
+    control = df[df[group_col] == control_label]
+    s_c, n_c = int(control[outcome_col].sum()), len(control)
+
+    print("[5] VERDICT")
     results = []
-    for t in treatments:
-        arm = df[df[group_col] == t]
+    for label in [g for g in df[group_col].unique() if g != control_label]:
+        arm = df[df[group_col] == label]
         res = two_proportion_ztest(
-            int(arm[outcome_col].sum()), len(arm),
-            int(ctrl[outcome_col].sum()), len(ctrl))
-        results.append((t, res))
+            int(arm[outcome_col].sum()), len(arm), s_c, n_c,
+            metric=outcome_col, comparison=f"{label} vs {control_label}",
+        )
+        results.append(res)
+        sig = "significant" if res.p_value < 0.05 else "not significant"
+        print(f"    {res.comparison}")
+        print(f"      lift {res.effect*100:+.3f}pp ({res.relative_lift:+.1%} relative), "
+              f"95% CI [{res.ci_low*100:+.3f}, {res.ci_high*100:+.3f}]pp, "
+              f"p={res.p_value:.2e} ({sig})")
 
-    adjusted, reject = holm_correction([r.p_value for _, r in results])
-
-    for (name, res), p_adj, sig in zip(results, adjusted, reject):
-        print(f"\n  {name}  vs  {control_label}")
-        print(f"    rates      : {res.p_treat:.3%} vs {res.p_ctrl:.3%}")
-        print(f"    lift       : {res.abs_lift:+.3%} absolute "
-              f"({res.rel_lift:+.0%} relative)")
-        print(f"    95% CI     : [{res.ci_low:+.3%}, {res.ci_high:+.3%}]")
-        print(f"    p-value    : {res.p_value:.2e}  "
-              f"(Holm-adjusted: {p_adj:.2e})")
-        print(f"    conclusion : "
-              + ("statistically significant" if sig else "not significant"))
-
-    print("\n" + "-" * WIDTH)
+    print()
     if not design_ok:
-        print(f"{FAIL} OVERALL: TEST INVALID OR COMPROMISED.")
-        print("   Design checks failed. The numbers above are reported for")
-        print("   completeness but should NOT drive a shipping decision.")
-    elif any(reject):
-        winners = [name for (name, _), sig in zip(results, reject) if sig]
-        print(f"{PASS} OVERALL: SHIP -- significant winner(s): "
-              f"{', '.join(winners)}.")
+        print("    RECOMMENDATION: TEST INVALID. Design checks failed - fix the")
+        print("    assignment pipeline and rerun before making any decision.")
     else:
-        print(f"{WARN} OVERALL: DO NOT SHIP -- no arm beat control beyond "
-              "chance at this sample size.")
+        winners = [r for r in results if r.p_value < 0.05 and r.effect > 0]
+        if winners:
+            best = max(winners, key=lambda r: r.effect)
+            print(f"    RECOMMENDATION: SHIP. '{best.comparison.split(' vs ')[0]}' shows a")
+            print(f"    significant lift on a validly designed experiment.")
+        else:
+            print("    RECOMMENDATION: DO NOT SHIP. No arm shows a significant")
+            print("    improvement (check the power section before calling it a null).")
+    print(SEPARATOR)
+    return results
 
 
 # ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
 
-def main():
-    ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
-    ap.add_argument("csv")
-    ap.add_argument("--group-col", required=True)
-    ap.add_argument("--outcome-col", required=True)
-    ap.add_argument("--control-label", required=True)
-    ap.add_argument("--covariates", nargs="*", default=[])
-    ap.add_argument("--expected-ratios", nargs="*", type=float, default=[],
-                    help="Intended split, e.g. 0.5 0.5. Default: equal.")
-    ap.add_argument("--mde", type=float, default=0.002,
-                    help="Hypothesized minimum effect for the power check.")
-    ap.add_argument("--peek-demo", default=None, metavar="PNG",
-                    help="Also run the peeking simulation, save chart here.")
-    args = ap.parse_args()
+def audit(csv_path: str, group_col: str, outcome_col: str, control_label: str,
+          expected_shares: dict[str, float] | None = None,
+          post_treatment_cols: list[str] | None = None,
+          ignore_cols: list[str] | None = None,
+          peeking_plot: str | None = None):
+    df = pd.read_csv(csv_path)
+    # Drop identifier columns and pandas' "Unnamed: 0" index artifact:
+    # IDs are numeric but carry no covariate meaning, so leaving them in
+    # would add noise rows to the balance check.
+    drop = [c for c in df.columns if c.startswith("Unnamed")] + list(ignore_cols or [])
+    df = df.drop(columns=[c for c in drop if c in df.columns])
+    # Normalize boolean-ish outcomes (True/False strings, bools) to 0/1 so
+    # the same code paths work on any dataset.
+    if df[outcome_col].dtype == bool or df[outcome_col].dtype == object:
+        df[outcome_col] = (
+            df[outcome_col].astype(str).str.lower().map({"true": 1, "false": 0})
+            .fillna(pd.to_numeric(df[outcome_col], errors="coerce"))
+        )
 
-    df = pd.read_csv(args.csv)
-    # Booleans (Kaggle's 'converted' column) -> 0/1 so the math is uniform.
-    if df[args.outcome_col].dtype == bool:
-        df[args.outcome_col] = df[args.outcome_col].astype(int)
+    print("=" * 68)
+    print(f"EXPERIMENT AUDIT: {Path(csv_path).name}")
+    print(f"groups='{group_col}'  outcome='{outcome_col}'  control='{control_label}'")
+    print("=" * 68)
 
-    print("#" * WIDTH)
-    print(f"# EXPERIMENT AUDIT: {args.csv}")
-    print(f"# groups='{args.group_col}'  outcome='{args.outcome_col}'  "
-          f"control='{args.control_label}'")
-    print("#" * WIDTH)
+    srm_ok = check_srm(df, group_col, expected_shares)
+    balance_ok = check_balance(df, group_col, outcome_col, post_treatment_cols)
+    check_power(df, group_col, outcome_col, control_label)
 
-    srm_ok = check_srm(df, args.group_col,
-                       args.expected_ratios or None)
-    bal_ok = check_balance(df, args.group_col, args.covariates)
-    pow_ok = check_power(df, args.group_col, args.outcome_col,
-                         args.control_label, args.mde)
-    if args.peek_demo:
-        peeking_demo(save_path=args.peek_demo)
+    # Peek-replay the largest treatment arm against control.
+    treat_labels = [g for g in df[group_col].unique() if g != control_label]
+    biggest = df[df[group_col].isin(treat_labels)][group_col].value_counts().idxmax()
+    check_peeking(df, group_col, outcome_col, control_label, biggest,
+                  save_plot=peeking_plot)
 
-    # Balance "None" (not checkable) doesn't invalidate; SRM failure does.
-    design_ok = srm_ok and (bal_ok is not False)
-    verdict(df, args.group_col, args.outcome_col, args.control_label,
-            design_ok)
-    return 0
+    check_verdict(df, group_col, outcome_col, control_label, srm_ok and balance_ok)
+
+
+def parse_expected_share(pairs: list[str]) -> dict[str, float] | None:
+    if not pairs:
+        return None
+    out = {}
+    for pair in pairs:
+        key, val = pair.rsplit("=", 1)
+        out[key] = float(val)
+    return out
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    parser = argparse.ArgumentParser(description="Audit an A/B test CSV.")
+    parser.add_argument("csv", help="path to the experiment CSV")
+    parser.add_argument("--group", required=True, help="column with the arm assignment")
+    parser.add_argument("--outcome", required=True, help="binary outcome column")
+    parser.add_argument("--control", required=True, help="label of the control arm")
+    parser.add_argument(
+        "--expected-share", action="append", default=[],
+        metavar="ARM=SHARE",
+        help="designed traffic share per arm, e.g. --expected-share ad=0.96 "
+             "(omit for an equal split design)",
+    )
+    parser.add_argument(
+        "--post-treatment", action="append", default=[],
+        metavar="COL",
+        help="columns measured AFTER treatment (other outcomes); excluded "
+             "from the balance check since they legitimately differ by arm",
+    )
+    parser.add_argument(
+        "--ignore", action="append", default=[],
+        metavar="COL",
+        help="identifier columns to drop entirely (e.g. user id)",
+    )
+    parser.add_argument(
+        "--peeking-plot", default=None, metavar="PATH",
+        help="save the peeking-simulation chart to this path",
+    )
+    args = parser.parse_args()
+    audit(args.csv, args.group, args.outcome, args.control,
+          parse_expected_share(args.expected_share),
+          post_treatment_cols=args.post_treatment,
+          ignore_cols=args.ignore,
+          peeking_plot=args.peeking_plot)

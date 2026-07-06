@@ -1,58 +1,56 @@
 # Data
 
-## 1. `raw/hillstrom.csv` — The Hillstrom Email Experiment (primary dataset)
+## 1. `raw/hillstrom.csv` — the primary experiment (committed, 4 MB)
 
-A **real randomized controlled experiment** run by a retail company and released
-publicly by Kevin Hillstrom (former VP of Database Marketing, Nordstrom / Eddie Bauer)
-as the "MineThatData E-Mail Analytics And Data Mining Challenge" (March 2008).
+The Hillstrom "MineThatData" E-Mail Analytics Challenge dataset (2008): a **real randomized experiment** on 64,000 customers of a retailer, released publicly by Kevin Hillstrom. Each customer had purchased within the previous 12 months and was randomly assigned to one of three arms.
 
-- **Source:** http://www.minethatdata.com/Kevin_Hillstrom_MineThatData_E-MailAnalytics_DataMiningChallenge_2008.03.20.csv
-- **Announcement:** https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html
-- **Population:** 64,000 customers who purchased within the last 12 months
-- **Design:** customers randomly assigned to one of three arms:
-  - `Mens E-Mail` — received an email featuring men's merchandise (~21,307)
-  - `Womens E-Mail` — received an email featuring women's merchandise (~21,387)
-  - `No E-Mail` — control group, received nothing (~21,306)
-- **Outcome window:** two weeks following the email send
+Source: [blog.minethatdata.com](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html) — direct CSV:
+
+```bash
+curl -o raw/hillstrom.csv "http://www.minethatdata.com/Kevin_Hillstrom_MineThatData_E-MailAnalytics_DataMiningChallenge_2008.03.20.csv"
+```
 
 ### Data dictionary
 
-| Column | Type | Description | Measured |
+| Column | Type | Timing | Meaning |
 |---|---|---|---|
-| `recency` | int | Months since last purchase (1–12) | pre-treatment |
-| `history_segment` | str | Bucketed dollar value spent in the past year | pre-treatment |
-| `history` | float | Actual dollars spent in the past year | pre-treatment |
-| `mens` | int (0/1) | Bought men's merchandise in the past year | pre-treatment |
-| `womens` | int (0/1) | Bought women's merchandise in the past year | pre-treatment |
-| `zip_code` | str | Urban / Suburban / Rural | pre-treatment |
-| `newbie` | int (0/1) | New customer in the past 12 months | pre-treatment |
-| `channel` | str | Purchase channel in the past year: Phone / Web / Multichannel | pre-treatment |
-| `segment` | str | **Treatment assignment** (the experiment arm) | treatment |
-| `visit` | int (0/1) | Visited the website within two weeks | outcome |
-| `conversion` | int (0/1) | Purchased within two weeks | outcome |
-| `spend` | float | Dollars spent within two weeks | outcome |
+| `recency` | int (1–12) | pre-treatment | Months since last purchase |
+| `history_segment` | category | pre-treatment | Past-year spend band (e.g. `2) $100 - $200`) |
+| `history` | float | pre-treatment | Actual past-year spend in dollars |
+| `mens` | 0/1 | pre-treatment | Bought men's merchandise in the past year |
+| `womens` | 0/1 | pre-treatment | Bought women's merchandise in the past year |
+| `zip_code` | category | pre-treatment | Urban / Surburban / Rural (sic — "Surburban" is in the source data) |
+| `newbie` | 0/1 | pre-treatment | New customer within the past 12 months |
+| `channel` | category | pre-treatment | Past purchase channel: Phone / Web / Multichannel |
+| `segment` | category | **treatment** | Randomized arm: `Mens E-Mail` / `Womens E-Mail` / `No E-Mail` |
+| `visit` | 0/1 | outcome (2 weeks) | Visited the website |
+| `conversion` | 0/1 | outcome (2 weeks) | Made a purchase |
+| `spend` | float | outcome (2 weeks) | Dollars spent |
 
-The pre-treatment columns matter for two reasons: they let us **verify the
-randomization worked** (groups should look identical on these), and they enable
-**segmentation** (which customers respond to which email).
+The pre/post-treatment distinction matters: only pre-treatment columns may be used for balance checks and segmentation (see `docs/02_technical_deep_dive.md`, section 5).
 
-## 2. `raw/marketing_ab.csv` — Kaggle "Marketing A/B Testing" (auditor showcase)
+## 2. `raw/marketing_ab.csv` — the auditor showcase (NOT committed, 21 MB)
 
-A large digital-advertising experiment: users saw either real ads (`ad`) or a
-public service announcement (`psa`), and conversion was tracked.
+Kaggle "Marketing A/B Testing" dataset: 588,101 users assigned ~96/4 to see product ads vs. public service announcements. Used only to demonstrate the Experiment Auditor flagging a Sample Ratio Mismatch when the non-obvious 96/4 design isn't declared.
 
-- **Source:** https://www.kaggle.com/datasets/faviovaz/marketing-ab-testing
-- **Rows:** 588,101 users
-- **Columns:** `user id`, `test group` (ad/psa), `converted` (bool),
-  `total ads`, `most ads day`, `most ads hour`
+Download (no Kaggle account needed, via `kagglehub`):
 
-We use this dataset **deliberately because it is flawed**: the split is roughly
-96% ad / 4% PSA. Our `experiment_auditor.py` flags this automatically, which
-demonstrates why you audit an experiment's design before trusting its p-values.
+```bash
+python -c "
+import kagglehub, shutil, glob
+path = kagglehub.dataset_download('faviovaz/marketing-ab-testing')
+shutil.copy(glob.glob(path + '/**/*.csv', recursive=True)[0], 'raw/marketing_ab.csv')
+"
+```
 
-## Licensing / provenance note
+| Column | Meaning |
+|---|---|
+| `user id` | Unique user identifier |
+| `test group` | `ad` (saw product ads) or `psa` (saw public service announcements) |
+| `converted` | True if the user purchased |
+| `total ads` | Number of ads the user saw (post-treatment) |
+| `most ads day` / `most ads hour` | When the user saw the most ads (post-treatment) |
 
-Both datasets were released publicly for analysis and education. The Hillstrom
-data is the de-facto canonical benchmark for email experimentation and uplift
-modeling, which is useful here: published results exist to sanity-check our
-numbers against.
+## Licensing note
+
+Both datasets are publicly released for analysis and education. The Hillstrom dataset was published explicitly as an open challenge dataset; cite Kevin Hillstrom / MineThatData when reusing.

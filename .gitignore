@@ -21,6 +21,8 @@ ecom_purchases/data/Ecommerce Purchases.csv
 logistic_regression/data/advertising.csv
 k_means_clustering/data/Mall_Customers.csv
 heart_disease_pca/data/hungarian.data
+# 21MB, download via kagglehub - see ab_testing_email_marketing/data/README.md
+ab_testing_email_marketing/data/raw/marketing_ab.csv
 
 # IDE
 .idea/

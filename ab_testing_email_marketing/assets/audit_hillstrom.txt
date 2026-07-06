@@ -1,0 +1,40 @@
+====================================================================
+EXPERIMENT AUDIT: hillstrom.csv
+groups='segment'  outcome='conversion'  control='No E-Mail'
+====================================================================
+[1] SAMPLE RATIO MISMATCH CHECK  ->  PASS
+    Womens E-Mail        n=  21,387  observed 33.42%  vs designed 33.33%
+    Mens E-Mail          n=  21,307  observed 33.29%  vs designed 33.33%
+    No E-Mail            n=  21,306  observed 33.29%  vs designed 33.33%
+    chi-square p-value = 0.904  (alarm threshold: p < 0.001)
+    Split is consistent with the designed allocation.
+--------------------------------------------------------------------
+[2] COVARIATE BALANCE CHECK (pre-treatment variables)
+    recency              worst |SMD| = 0.0068  [balanced]
+    history              worst |SMD| = 0.0076  [balanced]
+    mens                 worst |SMD| = 0.0086  [balanced]
+    womens               worst |SMD| = 0.0076  [balanced]
+    newbie               worst |SMD| = 0.0034  [balanced]
+    Threshold: |SMD| < 0.10 (Austin 2009, standard in causal inference).
+--------------------------------------------------------------------
+[3] POWER CHECK
+    Baseline (control) rate      : 0.573%
+    Smallest arm                 : n=21,306
+    Minimum detectable effect    : 0.224pp absolute (39% relative) at 80% power
+    Largest observed lift        : 0.681pp -> power to detect it = 100%
+--------------------------------------------------------------------
+[4] PEEKING SIMULATION (Womens E-Mail vs No E-Mail)
+    Interim looks below p<0.05   : 72/100
+    Final p-value                : 0.000157
+    Signal is stable: significant early and stayed significant.
+    Plot saved to assets/peeking_hillstrom.png
+--------------------------------------------------------------------
+[5] VERDICT
+    Womens E-Mail vs No E-Mail
+      lift +0.311pp (+54.3% relative), 95% CI [+0.150, +0.472]pp, p=1.57e-04 (significant)
+    Mens E-Mail vs No E-Mail
+      lift +0.681pp (+118.8% relative), 95% CI [+0.500, +0.861]pp, p=1.52e-13 (significant)
+
+    RECOMMENDATION: SHIP. 'Mens E-Mail' shows a
+    significant lift on a validly designed experiment.
+--------------------------------------------------------------------
