@@ -2,66 +2,37 @@
 
 ![banner](assets/banner.png)
 
-Independent data science and data engineering projects. Start with the **featured** work below, then explore EDA and classic ML folders as you like.
+Portfolio index for data science and data engineering work. **For DE-focused hiring, start with the featured external repos** — they are the canonical copies.
 
-[Standalone A/B testing repo (same project, pinned on my profile)](https://github.com/AdityaDabrase/ab-testing-email-marketing) · [LinkedIn](https://www.linkedin.com/in/adityadabrase/)
+[LinkedIn](https://www.linkedin.com/in/adityadabrase/)
 
 ---
 
-## Featured
+## Featured (canonical repos)
 
-| Project | Why it matters |
+| Project | Repo |
 | --- | --- |
-| **[A/B Testing + Experiment Auditor](ab_testing_email_marketing/)** | Real 64k-customer randomized email test, decision memo with dollar impact, and a CLI that audits any A/B CSV for SRM / imbalance / power / peeking |
-| **[NA Telecom Data Platform](na-telecom-data-platform/)** | Batch pipeline for CRTC + FCC regulatory telecom data (Airflow, BigQuery/DuckDB, data quality). [Guide](na-telecom-data-platform/docs/project_explained.md) |
-| **[Health Insurance Charge Prediction](insurance_prediction/)** | Complete ML package: data, script, notebook, saved metrics/figures |
+| **NA Telecom Data Platform** | [na-telecom-data-platform](https://github.com/AdityaDabrase/na-telecom-data-platform) — CRTC + FCC batch pipeline (Airflow, DuckDB/BigQuery, data quality) |
+| **A/B Testing + Experiment Auditor** | [ab-testing-email-marketing](https://github.com/AdityaDabrase/ab-testing-email-marketing) — experiment analysis + reusable validity CLI |
+| **Retail Reporting Automation** | [retail-reporting-automation](https://github.com/AdityaDabrase/retail-reporting-automation) — CSV → KPI charts, Excel, PowerPoint |
 
-Also: **[Retail Reporting Automation](https://github.com/AdityaDabrase/retail-reporting-automation)** (separate repo) — CSV → charts, Excel, PowerPoint.
+Pointers in this monorepo: [`na-telecom-data-platform/`](na-telecom-data-platform/), [`ab_testing_email_marketing/`](ab_testing_email_marketing/).
 
 ---
 
-## Setup (once)
-
-Shared notebook/ML dependencies:
+## Setup (notebook / classic ML folders only)
 
 ```bash
 pip install -r requirements.txt
 ```
 
-The telecom platform has its **own** dependencies under `na-telecom-data-platform/` (Airflow, DuckDB, etc.).
+Dataset download steps: each project's `data/README.md`, or `python scripts/download_data.py`.
 
-Dataset sources and download steps live in each project's `data/README.md`. Optional bulk fetch:
-
-```bash
-python scripts/download_data.py
-```
+Telecom / A/B / retail dependencies live in **their own** repositories above.
 
 ---
 
-## All projects
-
-### Experimentation & causal inference
-
-| Project | Link |
-| --- | --- |
-| A/B Testing: Email Marketing + Experiment Auditor | [ab_testing_email_marketing](ab_testing_email_marketing/) |
-
-### Data engineering
-
-| Project | Link |
-| --- | --- |
-| North American Telecom Market Intelligence Pipeline | [na-telecom-data-platform](na-telecom-data-platform/) |
-
-### Exploratory data analysis
-
-| Project | Link |
-| --- | --- |
-| 911 Emergency Calls EDA | [911_calls_analysis](911_calls_analysis/) |
-| E-Commerce Purchases Analysis | [ecom_purchases](ecom_purchases/) |
-| San Francisco Salaries EDA | [salary_analysis](salary_analysis/) |
-| Titanic Data Visualization | [titanic_visualization](titanic_visualization/) |
-
-### Machine learning
+## Classic ML (supporting)
 
 | Project | Link |
 | --- | --- |
@@ -71,34 +42,24 @@ python scripts/download_data.py
 | Customer Segmentation (K-Means) | [k_means_clustering](k_means_clustering/) |
 | Heart Disease Prediction (PCA) | [heart_disease_pca](heart_disease_pca/) |
 
-### Reports & data quality
+## Learning / EDA notebooks (not DE signal)
+
+Kept for reference; not featured for data engineering roles.
 
 | Project | Link |
 | --- | --- |
+| 911 Emergency Calls EDA | [911_calls_analysis](911_calls_analysis/) |
+| E-Commerce Purchases Analysis | [ecom_purchases](ecom_purchases/) |
+| San Francisco Salaries EDA | [salary_analysis](salary_analysis/) |
+| Titanic Data Visualization | [titanic_visualization](titanic_visualization/) |
 | Boston Housing Price Analysis | [house_price_predictor](house_price_predictor/) |
-| Flight Delay — legacy PDF report (no training code in repo) | [flight_delay_predictor](flight_delay_predictor/) |
+| Flight Delay — legacy PDF report only | [flight_delay_predictor](flight_delay_predictor/) |
 
 ---
 
-## Project layout
-
-Folders vary by project type. A typical notebook project looks like:
-
-```
-project_name/
-├── README.md
-├── data/            # often gitignored; see data/README.md
-├── notebook.ipynb   # or analysis.py
-└── assets/          # figures where present
-```
-
-Larger systems (telecom, A/B testing) use their own `src/`, `docs/`, `tests/`, or `code/` layouts — see each project's README.
-
-`insurance_prediction/` is the most complete classic-ML example: bundled data, script, notebook, and saved results.
-
 ## License
 
-MIT — see [`LICENSE`](LICENSE). External datasets remain under their original terms (see each `data/README.md`).
+MIT — see [`LICENSE`](LICENSE). External datasets remain under their original terms.
 
 ## Contact
 

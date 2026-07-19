@@ -1,8 +1,0 @@
-[PASS] dim_carrier_no_null_ids: null carrier_id count: 0
-[PASS] mart_carrier_market_share_not_empty: row count: 443
-[PASS] churn_reconciles_to_crtc_benchmark: synthetic=0.0109, benchmark=0.0141, delta=0.0032
-[PASS] mart_no_duplicate_grain: duplicate grain groups: 0
-[PASS] fcc_valid_state_abbr: invalid state rows: 0
-[PASS] crtc_freshness_metadata: rows missing ingest_ts: 0
-[PASS] crtc_subscriber_total_sanity: 2024 total subscribers (M): 37.7
-[PASS] top3_churn_benchmark_configured: configured TOP3_CHURN_RATE=0.0116
