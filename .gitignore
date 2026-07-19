@@ -24,6 +24,12 @@ heart_disease_pca/data/hungarian.data
 # 21MB, download via kagglehub - see ab_testing_email_marketing/data/README.md
 ab_testing_email_marketing/data/raw/marketing_ab.csv
 
-# IDE
+# IDE / local tooling
 .idea/
 .vscode/
+.tmp_jupyter/
+**/.venv/
+**/__pycache__/
+.pytest_cache/
+*.duckdb
+*.duckdb.wal

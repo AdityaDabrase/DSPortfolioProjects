@@ -1,4 +1,6 @@
-# Flight Delay Classification
+# Flight Delay — Legacy PDF Report
+
+**Scope note:** This folder is a **legacy PDF report pack**, not a runnable ML training project. There is no notebook or training code here; use it as a written analysis artifact only.
 
 What drives flight delays for D.C.-area flights to New York — and which models best predict them?
 
