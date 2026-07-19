@@ -5,7 +5,6 @@
 
 Predicting individual medical insurance charges from demographic and lifestyle factors, and comparing five regression models on the task.
 
-> **Companion article:** [Can Machines Predict Your Future? Exploring the Power and Limits of Regression](https://www.linkedin.com/pulse/can-machines-predict-your-future-exploring-power-limits-dabrase-42jzc/)
 
 ![Overview](assets/overview.jpg)
 
