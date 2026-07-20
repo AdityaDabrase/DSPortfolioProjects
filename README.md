@@ -20,13 +20,12 @@ Pointers in this monorepo: [`na-telecom-data-platform/`](na-telecom-data-platfor
 
 ---
 
-## Setup (notebook / classic ML folders only)
+## Setup (classic ML folders only)
 
 ```bash
 pip install -r requirements.txt
+python scripts/download_data.py
 ```
-
-Dataset download steps: each project's `data/README.md`, or `python scripts/download_data.py`.
 
 Telecom / A/B / retail dependencies live in **their own** repositories above.
 
@@ -41,19 +40,6 @@ Telecom / A/B / retail dependencies live in **their own** repositories above.
 | Ad Click Prediction (Logistic Regression) | [logistic_regression](logistic_regression/) |
 | Customer Segmentation (K-Means) | [k_means_clustering](k_means_clustering/) |
 | Heart Disease Prediction (PCA) | [heart_disease_pca](heart_disease_pca/) |
-
-## Learning / EDA notebooks (not DE signal)
-
-Kept for reference; not featured for data engineering roles.
-
-| Project | Link |
-| --- | --- |
-| 911 Emergency Calls EDA | [911_calls_analysis](911_calls_analysis/) |
-| E-Commerce Purchases Analysis | [ecom_purchases](ecom_purchases/) |
-| San Francisco Salaries EDA | [salary_analysis](salary_analysis/) |
-| Titanic Data Visualization | [titanic_visualization](titanic_visualization/) |
-| Boston Housing Price Analysis | [house_price_predictor](house_price_predictor/) |
-| Flight Delay — legacy PDF report only | [flight_delay_predictor](flight_delay_predictor/) |
 
 ---
 

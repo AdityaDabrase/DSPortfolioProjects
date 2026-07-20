@@ -13,16 +13,11 @@ env/
 .ipynb_checkpoints/
 
 # Downloaded datasets (run: python scripts/download_data.py)
-# Bundled in git: insurance_prediction/data/insurance.csv, house_price_predictor/data/BostonHousing.xls
-911_calls_analysis/data/911.csv
-salary_analysis/data/Salaries.csv
+# Bundled in git: insurance_prediction/data/insurance.csv
 linear_regression/data/Ecommerce Customers.csv
-ecom_purchases/data/Ecommerce Purchases.csv
 logistic_regression/data/advertising.csv
 k_means_clustering/data/Mall_Customers.csv
 heart_disease_pca/data/hungarian.data
-# 21MB, download via kagglehub - see ab_testing_email_marketing/data/README.md
-ab_testing_email_marketing/data/raw/marketing_ab.csv
 
 # IDE / local tooling
 .idea/
